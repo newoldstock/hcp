@@ -1,0 +1,33 @@
+Tools and functionality:
+
+Hover the mouse over any of the tools to see a brief description of the tool's functionality
+
+* Feature Information
+Click within the map to display attribute information from the visible layers at the location clicked.  If data from more than one layer is returned, the information window will contain multiple tabs, one for each layer.
+
+* Pan
+Click-and-drag within the map, moving the map north, east, south, or west.
+
+* Zoom In
+This tool zooms into the map one level, centering the display at the location clicked.
+
+* Zoom Out
+This tool zooms out from the map one level, centering the display at the location clicked.
+
+* Enter Coordinates, Go To Location
+Center and zoom the map to a location described by latitude and longitude coordinates.
+
+* Zoom Previous
+Click this button to zoom to your last location.
+
+* Zoom Next
+This button is only available after having clicked Zoom Previous one or more times.  Zoom Next will return the map to the next location.
+
+* Measure Length
+Draw a line on the map, with the length of the line displayed below the map at the bottom of the window.  Click within the map to start measuring and double-click to stop.  Hold the shift-key to draw freehand, making the tracing of irregular features a quick task.
+
+* Measure Area
+Draw a polygon on the map, with the area of the polygon displayed below the map at the bottom of the window.  Click within the map to start measuring and double-click to stop.  Hold the shift-key to draw freehand, complex features.
+
+* Search
+Locate and zoom to a property by entering a partial or full APN (Assessor's Parcel Number).  APNs are unique identifiers assigned to each parcel and can be determined by visiting the Santa Clara County Assessor's website at www.sccassessor.org. 

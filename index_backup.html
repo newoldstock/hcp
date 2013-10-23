@@ -1,0 +1,157 @@
+<!--
+  ~ This program is free software: you can redistribute it and/or modify
+  ~ it under the terms of the GNU General Public License as published by
+  ~ the Free Software Foundation, either version 3 of the License, or
+  ~ (at your option) any later version.
+  ~
+  ~ This program is distributed in the hope that it will be useful,
+  ~ but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~ GNU General Public License for more details.
+  ~
+  ~ You should have received a copy of the GNU General Public License
+  ~ along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
+  -->
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+		"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+	<title>Habitat Agency Geobrowser</title>
+	<!-- External lib: ExtJS -->
+	<link rel="stylesheet" type="text/css" href="./mycss.css"/>			
+		<link rel="stylesheet" type="text/css" href="./splash.css"/>	<link rel="icon" type="image/ico" href="leaf.ico"></link> 	
+	
+	<link rel="stylesheet" type="text/css" href="http://extjs.cachefly.net/ext-3.4.0/resources/css/ext-all.css"/>
+	<script type="text/javascript" src="http://extjs.cachefly.net/ext-3.4.0/adapter/ext/ext-base.js"></script>
+	<script type="text/javascript" src="http://extjs.cachefly.net/ext-3.4.0/ext-all.js"></script>
+	<!--<link rel="stylesheet" type="text/css" href="../ext/resources/css/xtheme-gray.css" media="all" />-->
+		
+	<!-- External lib: OpenLayers -->
+	<link rel="stylesheet" type="text/css" href="http://lib.heron-mc.org/openlayers/2.12/theme/default/style.css"/>
+	<script type="text/javascript" src="http://lib.heron-mc.org/openlayers/2.12/OpenLayers.js"></script>
+
+
+	<!-- External lib: GeoExt -->
+	<script type="text/javascript" src="http://lib.heron-mc.org/geoext/1.1/script/GeoExt.js"></script>
+	<script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?sensor=false"></script>
+
+	<link rel="stylesheet" type="text/css" href="../heron/resources/css/default.css"/>
+
+		<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+				<script type="text/javascript" src="./splash.js"></script>
+ <!--	   <link rel="stylesheet" type="text/css" href="../heron/ux/gxp/git/src/theme/all.css"/>
+    <script type="text/javascript" src="../heron/ux/gxp/gxp.js"></script>	
+-->
+	<!-- application -->
+	<script type="text/javascript" src="../heron/script/Heron.js"></script>
+
+	<script type="text/javascript" src="./OptionsWorld.js"></script>
+	<script type="text/javascript" src="Config.js"></script>
+	<script type="text/javascript" src="./DefaultConfig.js"></script>
+
+	<script>
+	function setFixes()
+	{
+	try
+		{
+		gHyb.mapObject.setTilt(0);
+		}
+	catch(err)
+		{
+		//This is because IE fires the onLoad event too early
+		setTimeout(function(){setFixes()}, 1000);
+		}
+
+	};
+
+	function makeWindow()
+	{
+		OpenLayers.IMAGE_RELOAD_ATTEMPTS = 3;
+		//Heron.App.map.zoomToMaxExtent();
+		win = new Ext.Window({
+			applyTo:'welcome_instr',
+			layout:'fit',
+			width:500,
+			height:365,
+			closeAction:'hide',
+			plain: true,
+
+			items: new Ext.TabPanel({
+				applyTo: 'welcome_instr_tabs',
+				autoTabs:true,
+				activeTab:0,
+				deferredRender:false,
+				border:false,
+				defaults:{ autoScroll:true }
+			})
+		});
+	}
+	</script> 
+</head>
+<body onload="setFixes(); makeWindow(); //win.show(this);">
+<div id="welcome_instr" class="x-hidden">
+    <div class="x-window-header">Habitat Agency Geobrowser</div>
+    <div id="welcome_instr_tabs">
+        <!-- Auto create tab  -->
+        <div class="x-tab" title="Instructions" style="margin: 10px;">
+			<h1>How To Use The Geobrowser</h1><br>
+			<p>The geobrowser displays mapping data as a series of layers, listed in the left-hand column, each with a check box to switch their visibility on or off.
+				The layers are organized into "Base Layers" and "Overlays" groups.  Base layers provide satellite imagery, terrain, and street maps as a foundation onto 
+				which the overlay layers are displayed.  Layers positioned higher in the list are drawn above lower items within the map.  
+				Change the order of display by clicking and dragging the title of a layer to a new location in the list.  Some layers (e.g. Parcels) are only 
+				visible at limited zoom levels.</p><br>
+			<p>Double-click on the map to zoom in and center the display at that location.  Hold down the shift key to draw a zoom extent.</p><br>
+			<h1>The Toolbar</h1>
+			<img src="./resources/hcp_toolbar.jpg">
+
+			<p>The toolbar is located above the map and contains a set of tools that provide navigation, measuring, and search capabilities.  Hover the mouse over 
+				a tool to see a brief description of the tool's functionality.</p><br>
+			<h1><img src="./resources/help_tool.jpg"> Help</h1>
+			<p>Open this window and display these instructions.</p><br>				
+
+			<h1><img src="./resources/pan.jpg"> Pan</h1>
+			<p>Click-and-drag within the map, moving the map north, east, south, or west.</p><br>
+
+			<h1><img src="./resources/zoom_in.jpg"> Zoom In</h1>
+			<p>Zoom into the map one level, centering the display at the location clicked.</p><br>
+
+			<h1><img src="./resources/zoom_out.jpg"> Zoom Out</h1>
+			<p>Zoom out from the map one level, centering the display at the location clicked.</p><br>
+
+			<h1><img src="./resources/zoom_to_coordinates.jpg"> Enter Coordinates, Go To Location</h1>
+			<p>Center and zoom the map to a location entered as latitude and longitude coordinates.</p><br>
+
+			<h1><img src="./resources/previous_extent.jpg"> Zoom Previous</h1>
+			<p>Click to zoom to your last location.</p><br>
+
+			<h1><img src="./resources/zoom_next.jpg"> Zoom Next</h1>
+			<p>Click to forward the map to the next location. This button is only available after having clicked Zoom Previous one or more times.</p><br>
+
+			<h1><img src="./resources/measure_length.jpg"> Measure Length</h1>
+			<p>Draw a line on the map, with the length of the line displayed below the map at the bottom of the window. Click within the map to start measuring
+				and double-click to stop. Hold down the shift key to draw freehand, making the tracing of irregular features a quick task.</p><br>
+
+			<h1><img src="./resources/measure_area.jpg"> Measure Area</h1>
+			<p>Draw a polygon on the map, with the area of the polygon displayed below the map at the bottom of the window. Click within the map to start measuring and
+			 double-click to stop. Hold down the shift key to easily draw freehand shapes around complex features.</p><br>
+			 
+			<h1><img src="./resources/feature_information.jpg"> Feature Information</h1>
+			<p>Click within the map to display attribute information from the visible layers at the location clicked. If data from more than one layer is returned,
+				 the information window will contain multiple tabs, one for each layer.</p><br>
+
+			<h1><img src="./resources/search_by_apn.jpg"> Search</h1>
+			<p>Locate and zoom to a property by entering a partial or full APN (Assessor's Parcel Number). APNs are unique identifiers assigned to each parcel and can 
+				be determined by visiting the Santa Clara County Assessor's website at <a href="http://www.sccassessor.org" target="_blank">www.sccassessor.org</a>
+				. Results will remain highlighted on the map until the search window is closed.  Double-click a row in the results table to zoom to that
+				property.</p><br>
+				
+
+				
+				
+		</div>			
+    </div>
+</div>
+</body> 
+</html>
