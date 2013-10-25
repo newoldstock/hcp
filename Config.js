@@ -29,12 +29,91 @@
 
 Ext.namespace("Heron.examples");
 
-/** Create a config for the search panel. This panel may be embedded into the accordion
- * or bound to the "find" button in the toolbar. Here we use the toolbar button.
+/** Define new default selection styles
  */
  
+OpenLayers.Feature.Vector.style={
+	"default":{
+		fillColor:"#ee9900",
+		fillOpacity:0.0,
+		hoverFillColor:"white",
+		hoverFillOpacity:0.8,
+		strokeColor:"#FFFF00",
+		strokeOpacity:0.8,
+		strokeWidth:3,
+		strokeLinecap:"round",
+		strokeDashstyle:"solid",
+		hoverStrokeColor:"red",
+		hoverStrokeOpacity:1,
+		hoverStrokeWidth:0.2,
+		pointRadius:6,
+		hoverPointRadius:1,
+		hoverPointUnit:"%",
+		pointerEvents:"visiblePainted",
+		cursor:"inherit",
+		fontColor:"#000000",
+		labelAlign:"cm",
+		labelOutlineColor:"white",
+		labelOutlineWidth:3
+		},
 
+	select:{
+		fillColor:"blue",
+		fillOpacity:0.0,
+		hoverFillColor:"white",
+		hoverFillOpacity:0.8,
+		strokeColor:"#FF0000",
+		strokeOpacity:1,
+		strokeWidth:6,
+		strokeLinecap:"round",
+		strokeDashstyle:"solid",
+		hoverStrokeColor:"red",
+		hoverStrokeOpacity:1,
+		hoverStrokeWidth:0.2,
+		pointRadius:6,
+		hoverPointRadius:1,
+		hoverPointUnit:"%",
+		pointerEvents:"visiblePainted",
+		cursor:"pointer",
+		fontColor:"#000000",
+		labelAlign:"cm",
+		labelOutlineColor:"white",
+		labelOutlineWidth:3},
+		
+	temporary:{
+		fillColor:"#66cccc",
+		fillOpacity:0.2,
+		hoverFillColor:"white",
+		hoverFillOpacity:0.8,
+		strokeColor:"#66cccc",
+		strokeOpacity:1,
+		strokeLinecap:"round",
+		strokeWidth:2,
+		strokeDashstyle:"solid",
+		hoverStrokeColor:"red",
+		hoverStrokeOpacity:1,
+		hoverStrokeWidth:0.2,
+		pointRadius:6,
+		hoverPointRadius:1,
+		hoverPointUnit:"%",
+		pointerEvents:"visiblePainted",
+		cursor:"inherit",
+		fontColor:"#000000",
+		labelAlign:"cm",
+		labelOutlineColor:"white",
+		labelOutlineWidth:3},
+		
+	"delete":{
+		display:"none"}
+	};
 
+	/** Create a config for the search panel. This panel may be embedded into the accordion
+	 * or bound to the "find" button in the toolbar. Here we use the toolbar button.
+	 */
+
+ 
+	 
+	 
 var treeDefault = [
 	{
 		nodeType: "gx_overlaylayercontainer",
