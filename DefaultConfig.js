@@ -133,7 +133,7 @@ Heron.layout = {
 							id: 'hr-featuregridpanel',
 							header: true,
 							autoConfig: true,
-							title: __('Search Results'),
+							title: __('Parcel Search Results'),
 							border: false,
 							downloadable: false,
 							columns: [

@@ -27,9 +27,14 @@
 		color: #AAAAAA;
 }
 
-.x-btn .icon-myitem {
+.x-btn .icon-instructions {
     background-image: url(./resources/help.png);
 }
+
+.x-btn .icon-report {
+    background-image: url(./resources/table.png);
+}
+
 
 .bmenu {
     background-image: url(menu-show.gif) !important;

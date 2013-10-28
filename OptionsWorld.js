@@ -325,7 +325,7 @@ Heron.options.map.toolbar = [
 		/* Options to be passed to your create function. */
 		options: {
 			tooltip: 'Show Help',
-			iconCls: "icon-myitem",
+			iconCls: "icon-instructions",
 			id: "myitem",
 			text: "Instructions"
 		}
@@ -455,6 +455,7 @@ Heron.options.map.toolbar = [
 			
 			return new GeoExt.Action({
 				text: "Report",
+				iconCls: "icon-report",				
 				control: new OpenLayers.Control({
 				    type: OpenLayers.Control.TYPE_TOOL,
 
@@ -468,7 +469,6 @@ Heron.options.map.toolbar = [
 				     */
 				    initialize: function(userFunction, options) {
 				        OpenLayers.Control.prototype.initialize.apply(this, [options]);
-				        this.userFunc = userFunction;
 				    },
 
 
@@ -490,7 +490,7 @@ Heron.options.map.toolbar = [
 				     */
 					identify: function(thePoint) {
 						var content;
-						var theURL = "process.php?x=" + thePoint.x + "&y=" + thePoint.y
+						var theURL = "process.php?x=" + thePoint.x + "&y=" + thePoint.y;
 						//get the file
 						$.ajax({
 						  type: "GET",
