@@ -123,7 +123,7 @@ Heron.options.map.layers = [
 		{layers: "HCP:NAIP2012", tiled: true},
 		{singleTile: false, isBaseLayer: true, visibility: false, noLegend: false, numZoomLevels: 21}
 	),
-	new OpenLayers.Layer("None", {isBaseLayer: true}),	
+	new OpenLayers.Layer("None", {isBaseLayer: true, numZoomLevels: 21}),	
 	
 	
     /*
@@ -270,6 +270,35 @@ Heron.options.map.layers = [
 	)
  ];
 
+//
+// var clkControl = new OpenLayers.Control();
+// OpenLayers.Util.extend(clkControl, {
+// 
+// 	draw: function() {
+// 		this.point = new OpenLayers.Handler.Point(clkControl,
+// 			{done: this.notice});
+// 		this.point.activate();
+// 	},
+// 
+// 	notice: function(thePoint) {
+// 		var content;
+// 		var theURL = "process.php?x=" + thePoint.x + "&y=" + thePoint.y
+// 		//get the file
+// 		$.ajax({
+// 		  type: "GET",
+// 		  url: theURL,
+// 		  dataType: "html",
+// 		  success : function(data) {
+// 		                content = data;
+// 						alert(content);
+// 		            }
+// 		});
+// 
+// 	}
+// });
+//Heron.App.map.addControl(clkControl);
+
+
 // See ToolbarBuilder.js : each string item points to a definition
 // in Heron.ToolbarBuilder.defs. Extra options and even an item create function
 // can be passed here as well. "-" denotes a separator item.
@@ -414,7 +443,80 @@ Heron.options.map.toolbar = [
                 maxFeatures: 10
             }
         }
-    }}	
+    }},
+
+	{
+		// Instead of an internal "type", or using the "any" type
+		// provide a create factory function.
+		// MapPanel and options (see below) are always passed
+		// From MapPanel we can access the OL Map to add Controls.
+		create: function (mapPanel, options) {
+			var map = mapPanel.getMap();
+			
+			return new GeoExt.Action({
+				text: "Report",
+				control: new OpenLayers.Control({
+				    type: OpenLayers.Control.TYPE_TOOL,
+
+				    /**
+				     * Constructor: OpenLayers.Control.Identify 
+				     * Fires a user defined function with the mouse position
+				     *
+				     * Parameters:
+				     * options - {userFunction} An optional object whose properties will be used
+				     *     to extend the control.
+				     */
+				    initialize: function(userFunction, options) {
+				        OpenLayers.Control.prototype.initialize.apply(this, [options]);
+				        this.userFunc = userFunction;
+				    },
+
+
+				    /**
+				     * Method: draw
+				     */    
+				    draw: function() {
+				        this.handler = new OpenLayers.Handler.Point(this,
+						 			{done: this.identify});
+				    },
+
+				    /**
+				     * Method: identify
+				     * Placeholder for user defined identify function
+				     *
+				     * Parameters:
+				     * evt - {Click Event}
+				     *
+				     */
+					identify: function(thePoint) {
+						var content;
+						var theURL = "process.php?x=" + thePoint.x + "&y=" + thePoint.y
+						//get the file
+						$.ajax({
+						  type: "GET",
+						  url: theURL,
+						  dataType: "html",
+						  success : function(data) {
+						                content = data;
+										alert(content);
+						            }
+						});				
+					
+				    }					
+						
+				}),
+				map: mapPanel.getMap(),
+				// button options
+				enableToggle: true,
+				pressed: false,
+            	toggleGroup: "toolGroup",
+				allowDepress: false,
+				tooltip: "Generate Report",
+				// check item options
+				group: "draw"
+			})
+		}
+	}
 ];
 
 Ext.namespace("Heron.options.layertree");	
