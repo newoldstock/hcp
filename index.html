@@ -76,6 +76,26 @@
 					defaults:{ autoScroll:true }
 				})
 			});
+			
+			reportWin = new Ext.Window({
+				applyTo:'report_win',
+				layout:'fit',
+				width:600,
+				height:500,
+				closeAction:'hide',
+				plain: true,
+				
+				items: new Ext.TabPanel({
+					applyTo: 'report_win_tabs',
+					autoTabs:true,
+					activeTab:0,
+					deferredRender:false,
+					border:false,
+					defaults:{ autoScroll:true }
+				})				
+			});
+					
+			
 		}
 		</script> 
 	</head>
@@ -133,6 +153,18 @@
 		</div>			
     </div>
 </div>
-<div id="ajaxContent" style="display:none;"></div>
+
+<div id="report_win" class="x-hidden">
+    <div class="x-window-header">Property Report</div>
+	    <div id="report_win_tabs">
+        <!-- Auto create tab  -->
+        <div class="x-tab" title="Analysis Results" style="margin: 10px;" id="report">
+		<p>A test</p>
+		</div>
+		</div>
+	
+</div>
+
+
 </body> 
 </html>

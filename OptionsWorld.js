@@ -175,7 +175,7 @@ Heron.options.map.layers = [
 		{singleTile: false, opacity: 0.7, isBaseLayer: false, visibility: false, noLegend: false, featureInfoFormat: 'application/vnd.ogc.gml' }
 	),	
 	new OpenLayers.Layer.WMS(
-		"Known Occurences of Covered Plants: 1/4 Mi Buffer",
+		"Known Occurrences of Covered Plants: 1/4 Mi Buffer",
 		'http://www.hcpmaps.com:8080/geoserver/HCP/wms?',
 		{layers: "HCP:known_occurrences_covered_plants", transparent: true, format: 'image/png', tiled: true},
 		{singleTile: false, opacity: 0.7, isBaseLayer: false, visibility: false, noLegend: false, featureInfoFormat: 'application/vnd.ogc.gml' }
@@ -455,7 +455,8 @@ Heron.options.map.toolbar = [
 			
 			return new GeoExt.Action({
 				text: "Report",
-				iconCls: "icon-report",				
+				iconCls: "icon-report",	
+			
 				control: new OpenLayers.Control({
 				    type: OpenLayers.Control.TYPE_TOOL,
 
@@ -489,6 +490,7 @@ Heron.options.map.toolbar = [
 				     *
 				     */
 					identify: function(thePoint) {
+						//reportWin.show(this);
 						var content;
 						var theURL = "process.php?x=" + thePoint.x + "&y=" + thePoint.y;
 						//get the file
@@ -498,7 +500,9 @@ Heron.options.map.toolbar = [
 						  dataType: "html",
 						  success : function(data) {
 						                content = data;
-										alert(content);
+										//alert(content);
+										Ext.fly("report").update(content);
+										reportWin.show(this);
 						            }
 						});				
 					
@@ -511,7 +515,7 @@ Heron.options.map.toolbar = [
 				pressed: false,
             	toggleGroup: "toolGroup",
 				allowDepress: false,
-				tooltip: "Generate Report",
+				tooltip: "Click on Parcel to Generate Report",
 				// check item options
 				group: "draw"
 			})

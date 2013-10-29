@@ -159,7 +159,7 @@ var newLayertree = [
 				{text: 'Plant Survey Areas', expanded: false, children:
 					[
 						{nodeType: 'gx_layer', layer: 'Plant Survey Areas'},	
-						{nodeType: 'gx_layer', layer: 'Known Occurences of Covered Plants: 1/4 Mi Buffer'},						
+						{nodeType: 'gx_layer', layer: 'Known Occurrences of Covered Plants: 1/4 Mi Buffer'},						
 					]
 				},
 
