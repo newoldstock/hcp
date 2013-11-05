@@ -24,13 +24,8 @@
 				 $pct_parcel = round(($row[1]/$row[2])*100, 1);  //calculate percent of parcel in attribute polygon
 				 if ($value <> "" && $pct_parcel >= $threshold ) { //if attribute has a value and percent of parcel > X then...
 					if ($pctYN == "Y") { //if $pctYN flag set to "Y", tag on percent
-						if ($row[1] < 20000) {
-							$sqft = round($row[1], 1);
-							$resultsArray[]=$value." ($sqft sq ft)";
-						} else {
-							$acres = round($row[1]/43560, 1);
-							$resultsArray[]=$value." ($acres acres)";
-						}
+						$acres = round($row[1]/43560, 1);
+						$resultsArray[]=$value." ($acres acres)";
 					  //$resultsArray[]=$value." ($row[1] sq ft)";
 					}
 					else { //if $pctYN set to "N", just the value
@@ -82,7 +77,7 @@
 		$apn = $row[0];
 	}
 	
-	//If no APN is returned, say so and crap out.
+	//If no APN is returned, say so and exit.
     if ($apn == '') {
 		echo '<p>No APN located';
 		exit;
@@ -98,6 +93,7 @@
 	// while ($row = pg_fetch_row($result)) {
 	// 	$apn = $row[0];
 	// }
+	echo '<link rel="stylesheet" type="text/css" href="./mycss.css"/>';
 	echo '<h1>General Information</h1>';
 	echo '<table cellpadding="0" cellspacing="0" class="db-table">';		
 	echo '<tr><td>APN</td><td>'.$apn.'</td></tr>';
@@ -130,7 +126,7 @@
 	if (count($queryLayer) >= 1) {
 	  echo '<tr><td>Habitat Plan Study Area</td><td>YES</td></tr>';
 	} else {
-	   echo '<tr><td><span style="color:red"><p>Not located within Habitat Plan Study area.  Analysis complete.</span></td></tr>';
+	   echo '<tr><td><span style="color:red"><p>Not located within the Habitat Plan Study area.  Analysis complete.</span></td></tr>';
 		exit;
 	}
 
@@ -181,14 +177,13 @@
 //Urban Reserve System Interface Zones----------------------------------------------------------
 	$queryLayer = run_query($dbconn, $apn,"urbanreservesysteminterfacezones", "note", 1, "Y");
 	formatResults ("Urban Reserve System Interface Zones", $queryLayer);
-
 	
 //Priority Reserve Areas--------------------------------------------------------------------
 	$queryLayer = run_query($dbconn, $apn,"conservationanalysiszones_high_mod", "priority", 1, "Y");
 	formatResults ("Priority Reserve Areas", $queryLayer);	
 	
 echo '</table>';
-
+//echo '<script type="text/javascript">Ext.ux.Printer.print(reportWin);</script>';
 // Closing connection
 pg_close($dbconn);
 

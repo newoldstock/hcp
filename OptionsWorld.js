@@ -246,7 +246,7 @@ Heron.options.map.layers = [
 		"Habitat Plan Permit Area",
 		'http://www.hcpmaps.com:8080/geoserver/HCP/wms?',
 		{layers: "HCP:hcp_boundary", transparent: true, format: 'image/png', tiled: false, styles: "slash"},
-		{singleTile: false, opacity: 0.50, isBaseLayer: false, visibility: true, noLegend: false,  featureInfoFormat: 'application/vnd.ogc.gml'}
+		{singleTile: false, opacity: 0.70, isBaseLayer: false, visibility: true, noLegend: false,  featureInfoFormat: 'application/vnd.ogc.gml'}
 		),	
 			
 	// new OpenLayers.Layer.WMS(
