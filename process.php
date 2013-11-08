@@ -96,7 +96,7 @@
 	echo '<link rel="stylesheet" type="text/css" href="./mycss.css"/>';
 	echo '<h1>General Information</h1>';
 	echo '<table cellpadding="0" cellspacing="0" class="db-table">';		
-	echo '<tr><td>APN</td><td>'.$apn.'</td></tr>';
+	echo '<tr><td>APN</td><td>'.$apn.'</td><th rowspan="6" width="300"><div id="report-map"></div></th></tr>';
 	echo '<tr><td>Address</td><td>'.$address.'</td></tr>';	
 	echo '<tr><td>Recorded Area</td><td>'.$acres_rec.' acres</td></tr>';	
 	
@@ -135,7 +135,7 @@
 	formatResults ("Private Development Areas", $queryLayer);
 	
 //Land Cover----------------------------------------------------------------------------
-	$queryLayer = run_query($dbconn, $apn,"land_cover", "land_cover", 1, "Y");
+	$queryLayer = run_query($dbconn, $apn,"land_cover", "land_cover", 0.5, "Y");
 	formatResults ("Land Cover", $queryLayer);
 	
 //Land Cover Fee Zones---------------------------------------------------------------------------
@@ -182,11 +182,15 @@
 	$queryLayer = run_query($dbconn, $apn,"conservationanalysiszones_high_mod", "priority", 1, "Y");
 	formatResults ("Priority Reserve Areas", $queryLayer);	
 	
-echo '</table>';
-//echo '<script type="text/javascript">Ext.ux.Printer.print(reportWin);</script>';
+
+
 // Closing connection
 pg_close($dbconn);
 
 
 ?>
+</table>
 
+</body>
+
+</html>

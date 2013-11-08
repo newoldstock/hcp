@@ -38,7 +38,7 @@
 		<script type="text/javascript" src="./OptionsWorld.js"></script>
 		<script type="text/javascript" src="Config.js"></script>
 		<script type="text/javascript" src="./DefaultConfig.js"></script>	
-		
+		<script type="text/javascript" src="./printThis.js"></script>			
 		<script type="text/javascript">
 		function setFixes()
 		{
@@ -80,8 +80,8 @@
 			reportWin = new Ext.Window({
 				applyTo:'report_win',
 				layout:'fit',
-				width:600,
-				height:700,
+				width:500,
+				height:400,
 				closeAction:'hide',
 				plain: true,
 				
@@ -159,14 +159,25 @@
 <div id="report_win" class="x-hidden">
     <div class="x-window-header">Property Report</div>
 	    <div id="report_win_tabs">
+
         <!-- Auto create tab  -->
         <div class="x-tab" title="Analysis Results" style="margin: 10px;" id="report">
-		<p>A test</p>
+
+		<div id="printit" style="width: 100px; margin: 0 auto; color:#00AA00;"><h1 align="center" style="background-color:#EEEEEE; padding: 5px;">Print Report</h1><br></div>
+		<div id="report-content">
+		</div>
 		</div>
 		</div>
 	
 </div>
-
+		<script type="text/javascript">
+			$("#printit").click(function() {
+				$("#report-content").printThis();
+				});
+			$("#printit").hover(function() {
+				$(this).css('cursor', 'pointer');
+				});
+		</script>
 
 </body> 
 </html>
