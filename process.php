@@ -62,15 +62,6 @@
 ?>
 <link rel="stylesheet" type="text/css" href="mycss.css"/>
 	
-			<script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
-			<script src="http://code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
-			<script src="./printThis.js"></script>
-			<script src="http://maps.google.com/maps/api/js?v=3&amp;sensor=false"></script>
-			<script src="http://openlayers.org/api/OpenLayers.js"></script>
-			<script>
-			
-			
-			</script>
 <?php	
 	$x = $_GET['x'];
 	$y = $_GET['y'];
