@@ -216,8 +216,10 @@
 
 				// Google.v3 uses EPSG:900913 as projection, so we have to
 				// transform our coordinates
-
-				reportmap.zoomToMaxExtent();
+				
+				//reportmap.zoomToMaxExtent();
+				theExtent = Heron.App.map.getExtent();
+				reportmap.zoomToExtent(theExtent);
 
 			}				
 				
