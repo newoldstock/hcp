@@ -27,6 +27,10 @@
 		color: #AAAAAA;
 }
 
+#report-content {
+	padding: 10px;
+}
+
 #report-map{
 	width: 300px;
 	height: 200px;
@@ -47,8 +51,6 @@
 }
 
 .db-table {
-	margin:0px;padding:0px;
-	margin-top:3px;
 	width:100%;
 	border:1px solid #000000;
 	border-collapse: collapse;
@@ -68,7 +70,8 @@
 	-moz-border-radius-topleft:0px;
 	-webkit-border-top-left-radius:0px;
 	border-top-left-radius:0px;
-}.db-table table{
+}
+.db-table table{
 	width:100%;
 	height:100%;
 	margin:0px;padding:0px;

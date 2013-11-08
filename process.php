@@ -59,7 +59,19 @@
 			echo '<span style="color:red">N/A</span></td></tr>';
 		}	
 	}
+?>
+<link rel="stylesheet" type="text/css" href="mycss.css"/>
 	
+			<script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
+			<script src="http://code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
+			<script src="./printThis.js"></script>
+			<script src="http://maps.google.com/maps/api/js?v=3&amp;sensor=false"></script>
+			<script src="http://openlayers.org/api/OpenLayers.js"></script>
+			<script>
+			
+			
+			</script>
+<?php	
 	$x = $_GET['x'];
 	$y = $_GET['y'];
 	$apn = '';
@@ -93,7 +105,7 @@
 	// while ($row = pg_fetch_row($result)) {
 	// 	$apn = $row[0];
 	// }
-	echo '<link rel="stylesheet" type="text/css" href="./mycss.css"/>';
+	echo '<body>';
 	echo '<h1>General Information</h1>';
 	echo '<table cellpadding="0" cellspacing="0" class="db-table">';		
 	echo '<tr><td>APN</td><td>'.$apn.'</td><th rowspan="6" width="300"><div id="report-map"></div></th></tr>';

@@ -502,8 +502,10 @@ Heron.options.map.toolbar = [
 						                content = data;
 										Ext.fly("report-content").update(content);
 										reportWin.show(this);
+										reportMapInit();
 						            }
-						});				
+						});	
+
 					
 				    }					
 						
