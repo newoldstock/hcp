@@ -205,14 +205,27 @@
 						
 			
 				reportmap = new OpenLayers.Map('report-map', options);
+				var naip = new OpenLayers.Layer.WMS(
+					"naip",
+					'http://www.hcpmaps.com/geoserver/HCP/wms?',
+					{layers: "HCP:NAIP2012", tiled: true},
+					{singleTile: false, isBaseLayer: true, visibility: true, noLegend: false, numZoomLevels: 21}
+				);
 
-
+				var parcels = new OpenLayers.Layer.WMS(
+					"Parcels",
+					'http://www.hcpmaps.com/geoserver/HCP/wms?',
+					{layers: "HCP:parcels_proj", transparent: true, format: 'image/png', tiled: true},
+					{singleTile: false, opacity: 1.0, isBaseLayer: false, visibility: true, noLegend: false, featureInfoFormat:
+						'application/vnd.ogc.gml', maxResolution: 19.109257068634033}
+				);
+				
 				var gsat = new OpenLayers.Layer.Google(
 					"Google Satellite",
 					{type: google.maps.MapTypeId.SATELLITE, numZoomLevels: 22}
 				);
 
-				reportmap.addLayers([gsat]);
+				reportmap.addLayers([parcels, naip]);
 
 				// Google.v3 uses EPSG:900913 as projection, so we have to
 				// transform our coordinates
@@ -220,6 +233,7 @@
 				//reportmap.zoomToMaxExtent();
 				theExtent = Heron.App.map.getExtent();
 				reportmap.zoomToExtent(theExtent);
+				reportmap.zoomIn();
 
 			}				
 				
