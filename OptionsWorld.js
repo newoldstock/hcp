@@ -315,7 +315,7 @@ Heron.options.map.toolbar = [
 					identify: function(aPoly) {
 						var content;
  						var theURL = "process.php?poly=" + aPoly;
-						$.blockUI({ message: '<p style="font-family: Arial, Helvetica, sans-serif; padding: 25px;"><img src="busy.gif" /> Running Analysis...</h1>' }); 
+						$.blockUI({ message: '<p style="font-family: Arial, Helvetica, sans-serif; font-weight: bold; padding: 25px;"><img src="busy.gif" /> Running Analysis...</h1>' }); 
 						setTimeout(function(){}, 1000);
 						//get the file
 						$.ajax({

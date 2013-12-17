@@ -73,6 +73,14 @@
 	$dbconn = pg_connect("host=localhost dbname=sccgis user=gisadmin password=g1s*dm1n")
 	    or die('Could not connect: ' . pg_last_error());
 
+	$validityQuery = "SELECT ST_IsValid($polyString)";
+
+	$result = pg_query($validityQuery) or die('Query failed: ' . pg_last_error());
+	$row = pg_fetch_row($result);
+	if ( $row[0] == 'f') {
+		echo '<tr><td><h1><span style="color:red"><p>There is a problem with the polygon you drew (it likely crosses over itself). <br>Please try the analysis again.</span></h1></td></tr>';
+		exit;
+	}	
 	// Get area in square feet from reprojected geometry
 	$query = "SELECT round(ST_Area($polyString))";
 	
