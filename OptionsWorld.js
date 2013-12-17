@@ -313,25 +313,23 @@ Heron.options.map.toolbar = [
 				     *
 				     */
 					identify: function(aPoly) {
-
-						testPoly = aPoly;
-						alert(testPoly);
-						
-						//reportWin.show(this);
-						//var content;
-/* 						var theURL = "process.php?x=" + thePoint.x + "&y=" + thePoint.y;
+						var content;
+ 						var theURL = "process.php?poly=" + aPoly;
+						$.blockUI({ message: '<p style="font-family: Arial, Helvetica, sans-serif; padding: 25px;"><img src="busy.gif" /> Running Analysis...</h1>' }); 
+						setTimeout(function(){}, 1000);
 						//get the file
 						$.ajax({
 						  type: "GET",
 						  url: theURL,
 						  dataType: "html",
 						  success : function(data) {
+										$.unblockUI();
 						                content = data;
 										Ext.fly("report-content").update(content);
 										reportWin.show(this);
-										reportMapInit();
+										//reportMapInit();
 						            }
-						});	 */
+						});	 
 				    }					
 						
 				}),
