@@ -93,10 +93,10 @@
 	}
 
 	// Insert polygon footprint with GUID into hcp_report_footprints table
-	//$insertQuery = "INSERT INTO hcp_report_footprints (guid, ip, the_geom) values ('$GUID', '$userIP', ST_GeomFromText('$rawpoly'))";
 	$insertQuery = "INSERT INTO hcp_report_footprints (the_geom, uniqueid) values (ST_GeomFromText('$rawpoly', 900913), '$uniqueID')";
 	$result = pg_query($insertQuery) or die('Query failed: ' . pg_last_error());	
 	
+	//Grab GID for 
 	$gidQuery = "SELECT gid from hcp_report_footprints WHERE uniqueid = '$uniqueID'";
 	$result = pg_query($gidQuery) or die('Query failed: ' . pg_last_error());	
 	$row = pg_fetch_row($result);
@@ -111,7 +111,7 @@
 		$theArea = round($row[0]/43560, 2);
 	}
 	$shpLink = "http://www.hcpmaps.com/geoserver/HCP/wfs?service=wfs&version=2.0.0&request=GetFeature&typeName=hcp_report_footprints&featureID=hcp_report_footprints.".$gid."&srsName=EPSG:2227&outputFormat=shape-zip";
-	echo '<a href="'.$shpLink.'" style="text-decoration: none"><div id="download" style="width: 100px; margin: 0 auto; color:#0000AA;"><h1 align="center" style="background-color:#EEEEEE; padding: 5px;">Download Data</h1></div></a>';
+	echo '<a href="'.$shpLink.'" style="text-decoration: none" title="Click to download analysis polygon as ESRI Shapefile"><div id="download" style="width: 100px; margin: 0 auto; color:#0000AA;"><h1 align="center" style="background-color:#EEEEEE; padding: 5px;">Download Data</h1></div></a>';
 	echo '<body>';
 	//echo '<a href="'.$shpLink.'" target="_blank">Download Footprint as ESRI Shapefile</a>';
 	echo '<h1>General Information</h1>';
