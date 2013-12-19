@@ -80,49 +80,7 @@ Ext.namespace("Heron.options.map");
      ] */
 };
 
-// TODO see how we can set/override Map OpenLayers Controls
-//Heron.options.map.controls = [new OpenLayers.Control.ZoomBox(),
-//			new OpenLayers.Control.ScaleLine({geodesic: true, maxWidth: 200})];
 
-/*
- * Layers to be added to the map.
- * Syntax is defined in OpenLayers Layer API.
- * ("isBaseLayer: true" means the layer will be added as base/background layer).
- */
-
-
-//
-// var clkControl = new OpenLayers.Control();
-// OpenLayers.Util.extend(clkControl, {
-// 
-// 	draw: function() {
-// 		this.point = new OpenLayers.Handler.Point(clkControl,
-// 			{done: this.notice});
-// 		this.point.activate();
-// 	},
-// 
-// 	notice: function(thePoint) {
-// 		var content;
-// 		var theURL = "process.php?x=" + thePoint.x + "&y=" + thePoint.y
-// 		//get the file
-// 		$.ajax({
-// 		  type: "GET",
-// 		  url: theURL,
-// 		  dataType: "html",
-// 		  success : function(data) {
-// 		                content = data;
-// 						alert(content);
-// 		            }
-// 		});
-// 
-// 	}
-// });
-//Heron.App.map.addControl(clkControl);
-
-
-// See ToolbarBuilder.js : each string item points to a definition
-// in Heron.ToolbarBuilder.defs. Extra options and even an item create function
-// can be passed here as well. "-" denotes a separator item.
 var testPoly;
 
 Heron.options.map.toolbar = [
@@ -314,7 +272,13 @@ Heron.options.map.toolbar = [
 				     */
 					identify: function(aPoly) {
 						var content;
- 						var theURL = "process.php?poly=" + aPoly;
+						var GUID = 'xxxxxxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+											var r = Math.random()*16|0, v = c == 'x' ? r : (r&0x3|0x8);
+											return v.toString(16);
+										});
+						testPoly = aPoly; //remove this later
+						var vertCount = aPoly.getVertices().length;
+ 						var theURL = "process.php?poly=" + aPoly + "&guid=" + GUID + "&vertcount=" + vertCount;
 						$.blockUI({ message: '<p style="font-family: Arial, Helvetica, sans-serif; font-weight: bold; padding: 25px;"><img src="busy.gif" /> Running Analysis...</h1>' }); 
 						setTimeout(function(){}, 1000);
 						//get the file
@@ -327,7 +291,14 @@ Heron.options.map.toolbar = [
 						                content = data;
 										Ext.fly("report-content").update(content);
 										reportWin.show(this);
-										//reportMapInit();
+										reportMapInit();
+										var polyFeature = new OpenLayers.Feature.Vector(aPoly);
+										var polyExtent = aPoly.getBounds();
+										var polyLayer = new OpenLayers.Layer.Vector("Poly Layer");
+										polyLayer.addFeatures(polyFeature);
+										reportmap.addLayer(polyLayer);
+										reportmap.zoomToExtent(polyExtent);
+										
 						            }
 						});	 
 				    }					

@@ -67,33 +67,57 @@
 <?php	
 	// Grab passed polygon
 	$rawpoly = $_GET['poly'];
+	$uniqueID = $_GET['guid'];
+	$vertcount = $_GET['vertcount'];
+	
+	// Halt the process if vertex count > 250
+	if ($vertcount > 250) {
+		echo '<tr><td><h1><span style="color:red"><p>There are too many vertices in your polygon for the analysis to progress.  Please reduce the complexity of the analysis footprint.</span></h1></td></tr>';
+		exit;
+	}
+	
+	//Convert polygon from EPSG:900913 to EPSG:2227
 	$polyString = "ST_Transform(ST_GeomFromText('".$rawpoly."', 900913), 2227)";
-
+	
 	// Connecting, selecting database
 	$dbconn = pg_connect("host=localhost dbname=sccgis user=gisadmin password=g1s*dm1n")
 	    or die('Could not connect: ' . pg_last_error());
 
+	//Bail out if polygon is tweaked	
 	$validityQuery = "SELECT ST_IsValid($polyString)";
-
 	$result = pg_query($validityQuery) or die('Query failed: ' . pg_last_error());
 	$row = pg_fetch_row($result);
 	if ( $row[0] == 'f') {
 		echo '<tr><td><h1><span style="color:red"><p>There is a problem with the polygon you drew (it likely crosses over itself). <br>Please try the analysis again.</span></h1></td></tr>';
 		exit;
-	}	
+	}
+
+	// Insert polygon footprint with GUID into hcp_report_footprints table
+	//$insertQuery = "INSERT INTO hcp_report_footprints (guid, ip, the_geom) values ('$GUID', '$userIP', ST_GeomFromText('$rawpoly'))";
+	$insertQuery = "INSERT INTO hcp_report_footprints (the_geom, uniqueid) values (ST_GeomFromText('$rawpoly', 900913), '$uniqueID')";
+	$result = pg_query($insertQuery) or die('Query failed: ' . pg_last_error());	
+	
+	$gidQuery = "SELECT gid from hcp_report_footprints WHERE uniqueid = '$uniqueID'";
+	$result = pg_query($gidQuery) or die('Query failed: ' . pg_last_error());	
+	$row = pg_fetch_row($result);
+	$gid = $row[0];
+	//$gid = pg_fetch_row($result)[0];
+	
 	// Get area in square feet from reprojected geometry
 	$query = "SELECT round(ST_Area($polyString))";
-	
 	$result = pg_query($query) or die('Query failed: ' . pg_last_error());
 	
 	while ($row = pg_fetch_row($result)) {
 		$theArea = round($row[0]/43560, 2);
 	}
-	
+	$shpLink = "http://www.hcpmaps.com/geoserver/HCP/wfs?service=wfs&version=2.0.0&request=GetFeature&typeName=hcp_report_footprints&featureID=hcp_report_footprints.".$gid."&srsName=EPSG:2227&outputFormat=shape-zip";
+	echo '<a href="'.$shpLink.'" style="text-decoration: none"><div id="download" style="width: 100px; margin: 0 auto; color:#0000AA;"><h1 align="center" style="background-color:#EEEEEE; padding: 5px;">Download Data</h1></div></a>';
 	echo '<body>';
+	//echo '<a href="'.$shpLink.'" target="_blank">Download Footprint as ESRI Shapefile</a>';
 	echo '<h1>General Information</h1>';
-	echo '<table cellpadding="0" cellspacing="0" class="db-table">';		
-	echo '<tr><td>Digitized Area</td><td>'.$theArea.' acres</td></tr>';	
+	echo '<table cellpadding="0" cellspacing="0" class="db-table">';	
+	echo '<tr><td>Digitized Area</td><td>'.$theArea.'</td><th rowspan="4" width="300"><div id="report-map"></div></th></tr>';	
+	//echo '<tr><td>Digitized Area</td> <td>'.$theArea.' acres</td><th rowspan="6" width="300"><div id="report-map"></div></th></tr>';
 	
 
 //City-------------------------------------------------------------------
@@ -183,9 +207,8 @@
 
 // Closing connection
 pg_close($dbconn);
-
-
 ?>
+
 </table>
 
 </body>
