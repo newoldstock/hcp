@@ -12,26 +12,205 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-/** This config assumes the DefaultOptionsNL.js to be included first!! */
+Ext.namespace("Heron");
+Ext.namespace("Heron.options");
+Ext.namespace("Heron.options.layertree");
 
-//Ext.namespace("Heron.options.map.settings");
+// Describe layout of application
+Heron.layout = {
+	xtype: 'panel',
 
-/** api: example[layertree]
- *  LayerTree
- *  ---------
- *  Build a custom layer tree for base layers and thematic overlays.
- */
+	/* Optional ExtJS Panel properties here, like "border", see ExtJS API docs. */
+	id: 'hr-container-main',
+	layout: 'border',
+	border: false,
 
-// This is an example how to create arbitrary Layer trees within the Layer Browser
-// See widgets/LayerTreePanel.js
+    /** Any classes in "items" and nested items are automatically instantiated (via "xtype") and added by ExtJS. */
+	items: [	
+		{
+			xtype: 'panel',
+			id: 'hr-menu-left-container',
+			layout: 'vbox',
+			layoutConfig: {
+				align: 'stretch',
+				pack: 'start'
+			},
+			//layout: 'accordion',
+			region : "west",
+			width: 325,
+			collapsible: true,
+			border: false,
+			items: [
+                {
+                    xtype: 'hr_searchcenterpanel',
+					//height: 240,
+					flex: 2,
+					hropts: {
+						searchPanel: {
+							xtype: 'hr_formsearchpanel',
+							showTopToolbar: true,
+							header: true,
+							title: __('Search by APN'),
+							border: false,
+							protocol: new OpenLayers.Protocol.WFS({
+								version: "1.1.0",
+								url: ['http://www.hcpmaps.com/cgi-bin/proxy.cgi?url=http://www.hcpmaps.com:8080/geoserver/wfs?'],
+								srsName: "EPSG:900913",
+								featureType: "parcels_proj"
+							}),
+							items: [
+								{
+									xtype: "textfield",
+									name: "apn__like",
+									value: '',
+									fieldLabel: "  APN"
+								},
+								{
+									xtype: "label",
+									id: "helplabel",
+									html: 'Enter a partial or complete APN (no dashes), and then click \'Search\' to locate a property.<br><br>Visit the <a href="https://www.sccassessor.org/" target="_blank">Santa Clara County Assessor\'s website</a> to determine the APN of a property.',
+									style: {
+										fontSize: '10px',
+										color: '#AAAAAA'
+									}
+								}
+							],
+							hropts: {
+								onSearchCompleteZoom: 10,
+								autoWildCardAttach: true,
+								caseInsensitiveMatch: true,
+								logicalOperator: OpenLayers.Filter.Logical.AND,
+								statusPanelOpts: {
+									html: '&nbsp;',
+									height: 'auto',
+									preventBodyReset: true,
+									bodyCfg: {
+										style: {
+											padding: '6px',
+											border: '0px'
+										}
+									},
+									style: {
+										marginTop: '2px',
+										paddingTop: '2px',
+										fontFamily: 'Verdana, Arial, Helvetica, sans-serif',
+										fontSize: '11px',
+										color: '#0000C0'
+									}
+								}
+							}
+						},
+						resultPanel: {
+							xtype: 'hr_featuregridpanel',
+							id: 'hr-featuregridpanel',
+							header: true,
+							autoConfig: true,
+							title: __('Parcel Search Results'),
+							border: false,
+							downloadable: false,
+							columns: [
+								{
+									header: "APN",
+									width: 58,
+									dataIndex: "apn"
+								},
+								{
+									header: "Address",
+									width: 203,
+									dataIndex: "situs_addr"
+								},
+								{
+									header: "Acres",
+									width: 55,
+									dataIndex: "acres_rec"
+								}				
+							],
+							//exportFormats: ['XLS', 'CSV'],
+							hropts: {
+								zoomOnRowDoubleClick: true,
+								zoomOnFeatureSelect: false,
+								zoomLevelPointSelect: 8
+							}
+						}
+					}
+                },
+				{
+					xtype: 'hr_layertreepanel',
+					//height: 450,
+					flex: 3,
+					// Optional, use internal default if not set
+					hropts : Heron.options.layertree,
 
-// This is the default tree, used here just for reference
+				}				
+			]
+		},
+		{
+			xtype: 'panel',
+			id: 'hr-map-and-info-container',
+			layout:'border',
+			region:'center',
+			width:'100%',
+			collapsible:false,
+			split:false,
+			border:false,
+			items: [
+				{
+					xtype: 'hr_mappanel',
+					id: 'hr-map',
+					title: '&nbsp;',
+					region: 'center',
+					collapsible : false,
+					border: false,
+					hropts: Heron.options.map
+				}
+			]
+		},
+		{
+			xtype: 'panel',
+			id: 'hr-menu-right-container',
+			layout: 'fit',			
+			region : "east",
+			width: 250,
+			collapsible: true,
+			split	: false,
+			border: false,
+			items: [
+				{
+					xtype: 'hr_layerlegendpanel',
+					id: 'hr-layerlegend-panel',
+					border: true,
+					defaults: {
+						useScaleParameter : true,
+						baseParams: {
+							FORMAT: 'image/png',
+							LEGEND_OPTIONS: 'fontSize:9'
+						}
+					},
+					hropts: {
+						// Preload Legends on initial startup
+						// Will fire WMS GetLegendGraphic's for WMS Legends
+						// Otherwise Legends will be loaded only when Layer
+						// becomes visible. Default: false
+						prefetchLegends: false
+					}
+				}
+			]
+		},
+		{
+			xtype: 'panel',
+			id: 'banner',
+			region : "north",
+			html: '<div id=\'banner_container\'><div id=\'banner_main\'><img src=\'final_banner.jpg\'/></div></div>',
+			height: 80,
+			collapsible: false,
+			border: false,
+			items: [
+			]
+		}		
+	]
+};
 
-Ext.namespace("Heron.examples");
-
-/** Define new default selection styles
- */
- 
+//Feature selection style
 OpenLayers.Feature.Vector.style={
 	"default":{
 		fillColor:"#ee9900",
@@ -106,276 +285,3 @@ OpenLayers.Feature.Vector.style={
 	"delete":{
 		display:"none"}
 	};
-
-	/** Create a config for the search panel. This panel may be embedded into the accordion
-	 * or bound to the "find" button in the toolbar. Here we use the toolbar button.
-	 */
-
- 
-	 
-	 
-var treeDefault = [
-	{
-		nodeType: "gx_overlaylayercontainer",
-		expanded: true,
-
-		// render the nodes inside this container with a radio button,
-		// and assign them the group "foo".
-		loader: {
-			baseAttrs: {
-				/*radioGroup: "foo", */
-				uiProvider: "layerNodeUI"
-			}
-		}
-	},
-	{
-		nodeType: "gx_baselayercontainer",
-		text: 'Base Layers',
-		expanded: true
-	}
-];
-
-Heron.options.map.layers = [
-
-    /*
-     * ==================================
-     *            BaseLayers
-     * ==================================
-     */
-	
-	gHyb = new OpenLayers.Layer.Google(
-			"Google Satellite",
-			{type: google.maps.MapTypeId.HYBRID, visibility: true},
-			{singleTile: false, buffer: 0, isBaseLayer: true}
-
-	), 
-	
-	new OpenLayers.Layer.Google(
-			"Google Terrain",
-			{type: google.maps.MapTypeId.TERRAIN, visibility: false, numZoomLevels: 16},
-			{singleTile: false, buffer: 0, isBaseLayer: true}
-	),
-	
-	new OpenLayers.Layer.Google(
-			"Google Streets", // the default
-			{type: google.maps.MapTypeId.ROADMAP, visibility: false},
-			{singleTile: false, buffer: 0, isBaseLayer: true}
-	),
-
-
-	new OpenLayers.Layer.WMS(
-		"<a href='http://www.fsa.usda.gov/FSA/apfoapp?area=home&subject=prog&topic=nai' target='_blank'>NAIP Imagery, 2012</a>",
-		'http://www.hcpmaps.com/geoserver/HCP/wms?',
-		{layers: "HCP:NAIP2012", tiled: true},
-		{singleTile: false, isBaseLayer: true, visibility: false, noLegend: false, numZoomLevels: 21}
-	),
-	new OpenLayers.Layer("None", {isBaseLayer: true, numZoomLevels: 21}),	
-	
-	
-    /*
-     * ==================================
-     *       All Other Layers
-     * ==================================
-     */
-	
-	new OpenLayers.Layer.WMS(
-		"Urban Service Areas",
-		'http://www.hcpmaps.com/geoserver/HCP/wms?',
-		{layers: "HCP:urbanservicearea", transparent: true, format: 'image/png', tiled: true},
-		{singleTile: false, opacity: 1.0, isBaseLayer: false, visibility: false, noLegend: false, featureInfoFormat: 'application/vnd.ogc.gml' }
-	),
-	new OpenLayers.Layer.WMS(
-		"City Limits",
-		'http://www.hcpmaps.com/geoserver/HCP/wms?',
-		{layers: "HCP:citylimits", transparent: true, format: 'image/png', tiled: true},
-		{singleTile: false, opacity: 0.6, isBaseLayer: false, visibility: false, noLegend: false, featureInfoFormat: 'application/vnd.ogc.gml' }
-	),	
-	new OpenLayers.Layer.WMS(
-		"Planning Limits of Urban Growth",
-		'http://www.hcpmaps.com/geoserver/HCP/wms?',
-		{layers: "HCP:planning_limits_of_urban_growth", transparent: true, format: 'image/png', tiled: true},
-		{singleTile: false, opacity: 0.8, isBaseLayer: false, visibility: false, noLegend: false, featureInfoFormat: 'application/vnd.ogc.gml' }
-	),
-	new OpenLayers.Layer.WMS(
-		"Priority Reserve Areas",
-		'http://www.hcpmaps.com/geoserver/HCP/wms?',
-		{layers: "HCP:priority_reserve_areas", transparent: true, format: 'image/png', tiled: true},
-		{singleTile: false, opacity: 0.8, isBaseLayer: false, visibility: false, noLegend: false, featureInfoFormat: 'application/vnd.ogc.gml' }
-	),
-	new OpenLayers.Layer.WMS(
-		"Urban Reserve System Interface Zones",
-		'http://www.hcpmaps.com/geoserver/HCP/wms?',
-		{layers: "HCP:urban_reserve_system", transparent: true, format: 'image/png', tiled: true},
-		{singleTile: false, opacity: 0.8, isBaseLayer: false, visibility: false, noLegend: false, featureInfoFormat: 'application/vnd.ogc.gml' }
-	),
-	new OpenLayers.Layer.WMS(
-		"Valley Oak and Blue Oak Woodlands",
-		'http://www.hcpmaps.com/geoserver/HCP/wms?',
-		{layers: "HCP:valley_and_blue_oak_woodlands", transparent: true, format: 'image/png', tiled: true},
-		{singleTile: false, opacity: 0.8, isBaseLayer: false, visibility: false, noLegend: false, featureInfoFormat: 'application/vnd.ogc.gml' }
-	),	
-	new OpenLayers.Layer.WMS(
-		"Category 1 Stream Buffers and Setbacks",
-		'http://www.hcpmaps.com/geoserver/HCP/wms?',
-		{layers: "HCP:category_1_stream_setbacks", transparent: true, format: 'image/png', tiled: true},
-		{singleTile: false, opacity: 0.7, isBaseLayer: false, visibility: false, noLegend: false, featureInfoFormat: 'application/vnd.ogc.gml' }
-	),	
-	new OpenLayers.Layer.WMS(
-		"Known Occurrences of Covered Plants: 1/4 Mi Buffer",
-		'http://www.hcpmaps.com/geoserver/HCP/wms?',
-		{layers: "HCP:known_occurrences_covered_plants", transparent: true, format: 'image/png', tiled: true},
-		{singleTile: false, opacity: 0.7, isBaseLayer: false, visibility: false, noLegend: false, featureInfoFormat: 'application/vnd.ogc.gml' }
-	),		
-		
-	new OpenLayers.Layer.WMS(
-		"Plant Survey Areas",
-		'http://www.hcpmaps.com/geoserver/HCP/wms?',
-		{layers: "HCP:plant_survey_areas", transparent: true, format: 'image/png', tiled: true},
-		{singleTile: false, opacity: 0.7, isBaseLayer: false, visibility: false, noLegend: false, featureInfoFormat: 'application/vnd.ogc.gml' }
-	),		
-	new OpenLayers.Layer.WMS(
-		"Wildlife Survey Areas",
-		'http://www.hcpmaps.com/geoserver/HCP/wms?',
-		{layers: "HCP:wildlife_survey_areas", transparent: true, format: 'image/png', tiled: true},
-		{singleTile: false, opacity: 0.7, isBaseLayer: false, visibility: false, noLegend: false, featureInfoFormat: 'application/vnd.ogc.gml' }
-	),	
-	new OpenLayers.Layer.WMS(
-		"Burrowing Owl Survey and Fee Zones",
-		'http://www.hcpmaps.com/geoserver/HCP/wms?',
-		{layers: "HCP:burrowing_owl_survey", transparent: true, format: 'image/png', tiled: true},
-		{singleTile: false, opacity: 0.8, isBaseLayer: false, visibility: false, noLegend: false, featureInfoFormat: 'application/vnd.ogc.gml' }
-	),	
-	new OpenLayers.Layer.WMS(
-		"Serpentine Fee Zones",
-		'http://www.hcpmaps.com/geoserver/HCP/wms?',
-		{layers: "HCP:serpentine_fee_zones", transparent: true, format: 'image/png', tiled: true},
-		{singleTile: false, opacity: 0.8, isBaseLayer: false, visibility: false, noLegend: false, featureInfoFormat: 'application/vnd.ogc.gml' }
-	),	
-	new OpenLayers.Layer.WMS(
-		"Wetland Fee Zones",
-		'http://www.hcpmaps.com/geoserver/HCP/wms?',
-		{layers: "HCP:wetland_fee_zones", transparent: true, format: 'image/png', tiled: true},
-		{singleTile: false, opacity: 0.8, isBaseLayer: false, visibility: false, noLegend: false, featureInfoFormat: 'application/vnd.ogc.gml' }
-	),	
-	new OpenLayers.Layer.WMS(
-		"Land Cover Fee Zones",
-		'http://www.hcpmaps.com/geoserver/HCP/wms?',
-		{layers: "HCP:land_cover_fee_zones", transparent: true, format: 'image/png', tiled: true},
-		{singleTile: false, opacity: 0.7, isBaseLayer: false, visibility: false, noLegend: false, featureInfoFormat: 'application/vnd.ogc.gml' }
-	),	
-	// new OpenLayers.Layer.WMS(
-		// "FEE ZONES",
-		// 'http://www.hcpmaps.com/geoserver/HCP/wms?',
-		// {layers: "HCP:grp_fee_zones", transparent: true, format: 'image/png', tiled: true},
-		// {singleTile: false, opacity: 0.7, isBaseLayer: false, visibility: false, noLegend: false, featureInfoFormat: 'application/vnd.ogc.gml' }
-	// ),		
-	new OpenLayers.Layer.WMS(
-		"Land Cover",
-		'http://www.hcpmaps.com/geoserver/HCP/wms?',
-		{layers: "HCP:hcp_land_cover", transparent: true, format: 'image/png', tiled: true},
-		{singleTile: false, opacity: 0.7, isBaseLayer: false, visibility: false, noLegend: false, featureInfoFormat: 'application/vnd.ogc.gml' }
-	),		
-	new OpenLayers.Layer.WMS(
-		"Private Development Areas",
-		'http://www.hcpmaps.com/geoserver/HCP/wms?',
-		{layers: "HCP:private_development_coverage_areas_2", transparent: true, format: 'image/png', tiled: true},
-		{singleTile: false, opacity: 0.8, isBaseLayer: false, visibility: false, noLegend: false, featureInfoFormat: 'application/vnd.ogc.gml' }
-	),	
-	new OpenLayers.Layer.WMS(
-		"Parcels",
-		'http://www.hcpmaps.com/geoserver/HCP/wms?',
-		{layers: "HCP:parcels_proj", transparent: true, format: 'image/png', tiled: true},
-		{singleTile: false, opacity: 1.0, isBaseLayer: false, visibility: false, noLegend: false, featureInfoFormat: 'application/vnd.ogc.gml', maxResolution: 19.109257068634033}
-	),
-	
-	new OpenLayers.Layer.WMS(
-		"Habitat Plan Permit Area",
-		'http://www.hcpmaps.com/geoserver/HCP/wms?',
-		{layers: "HCP:hcp_boundary", transparent: true, format: 'image/png', tiled: false, styles: "slash"},
-		{singleTile: false, opacity: 0.70, isBaseLayer: false, visibility: false, noLegend: false,  featureInfoFormat: 'application/vnd.ogc.gml'}
-		),	
-			
-	// new OpenLayers.Layer.WMS(
-		// "Habitat Plan Permit Area:Dots",
-		// 'http://www.hcpmaps.com/geoserver/HCP/wms?',
-		// {layers: "HCP:hcp_boundary", transparent: true, format: 'image/png', tiled: false, styles: "dots"},
-		// {singleTile: false, opacity: 0.80, isBaseLayer: false, visibility: true, noLegend: false,  featureInfoFormat: 'application/vnd.ogc.gml'}
-		// ),	
-		
-	// new OpenLayers.Layer.WMS(
-		// "Habitat Plan Permit Area",
-		// 'http://www.hcpmaps.com/geoserver/HCP/wms?',
-		// {layers: "HCP:hcp_boundary", transparent: true, format: 'image/png', tiled: true},
-		// {singleTile: false, opacity: 0.50, isBaseLayer: false, visibility: false, noLegend: false,  featureInfoFormat: 'application/vnd.ogc.gml'}
-		// ),	
-	new OpenLayers.Layer.WMS(
-		"Santa Clara County Boundary",
-		'http://www.hcpmaps.com/geoserver/HCP/wms?',
-		{layers: "HCP:county_boundary_area", transparent: true, format: 'image/png', tiled: true},
-		{singleTile: false, opacity: 0.9, isBaseLayer: false, visibility: true, noLegend: false}
-	)
- ];
- 
-// Layers are organized in the application using the Layer Tree below:
-var newLayertree = [
-	{
-		text:'HCP Data', expanded: true, children:
-			[
-				{nodeType: 'gx_layer', layer: 'Habitat Plan Permit Area'},
-				// {nodeType: 'gx_layer', layer: 'Habitat Plan Permit Area:Dots'},
-				// {nodeType: 'gx_layer', layer: 'Habitat Plan Permit Area:Slash'},				
-				{nodeType: 'gx_layer', layer: 'Private Development Areas'},		
-				{nodeType: 'gx_layer', layer: 'Land Cover'},
-				
-				{text: 'Fee Zones', expanded: false, children:
-					[
-						{nodeType: 'gx_layer', layer: 'Land Cover Fee Zones'},
-						{nodeType: 'gx_layer', layer: 'Wetland Fee Zones'},
-						{nodeType: 'gx_layer', layer: 'Serpentine Fee Zones'},
-						{nodeType: 'gx_layer', layer: 'Burrowing Owl Survey and Fee Zones'}						
-					]
-				},
-				
-				{nodeType: 'gx_layer', layer: 'Wildlife Survey Areas'},	
-				
-				{text: 'Plant Survey Areas', expanded: false, children:
-					[
-						{nodeType: 'gx_layer', layer: 'Plant Survey Areas'},	
-						{nodeType: 'gx_layer', layer: 'Known Occurrences of Covered Plants: 1/4 Mi Buffer'},						
-					]
-				},
-
-				{text: 'Habitat Plan Conditions', expanded: false, children:
-					[
-						{nodeType: 'gx_layer', layer: 'Category 1 Stream Buffers and Setbacks'},
-						{nodeType: 'gx_layer', layer: 'Valley Oak and Blue Oak Woodlands'},
-						{nodeType: 'gx_layer', layer: 'Urban Reserve System Interface Zones'}						
-					]
-				},
-				
-				{nodeType: 'gx_layer', layer: 'Priority Reserve Areas'},					
-			]
-	},
-	{
-		text:'General Data', expanded: true, children:
-			[
-				{nodeType: 'gx_layer', layer: 'Santa Clara County Boundary'},	
-				{nodeType: 'gx_layer', layer: 'Parcels'},					
-				{nodeType: 'gx_layer', layer: 'City Limits'},
-				{nodeType: 'gx_layer', layer: 'Urban Service Areas'},		
-				{nodeType: 'gx_layer', layer: 'Planning Limits of Urban Growth'}					
-			]
-	},
-	{
-		text:'Base Layers', nodeType: "gx_baselayercontainer", expanded: true
-	}	
-];
-
-
-
-
-// Replace default layer browser DefaultConfig.js
-// Pass our theme tree config as an option
-Ext.namespace("Heron.options.layertree");
-Heron.options.layertree.tree = newLayertree;
-

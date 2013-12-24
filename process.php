@@ -116,14 +116,13 @@
 	//echo '<a href="'.$shpLink.'" target="_blank">Download Footprint as ESRI Shapefile</a>';
 	echo '<h1>General Information</h1>';
 	echo '<table cellpadding="0" cellspacing="0" class="db-table">';	
-	echo '<tr><td>Digitized Area</td><td>'.$theArea.'</td><th rowspan="4" width="300"><div id="report-map"></div></th></tr>';	
+	echo '<tr><td>Digitized Area</td><td>'.$theArea.' acres</td><th rowspan="4" width="300"><div id="report-map"></div></th></tr>';	
 	//echo '<tr><td>Digitized Area</td> <td>'.$theArea.' acres</td><th rowspan="6" width="300"><div id="report-map"></div></th></tr>';
 	
 
 //City-------------------------------------------------------------------
 	$queryLayer = run_query($dbconn, $polyString, "citylimits", "name", 1, "Y");
-	formatResults ("City", $queryLayer);
-	
+	formatResults ("City", $queryLayer);	
 	
 //USA-------------------------------------------------------------------
 	$queryLayer = run_query($dbconn, $polyString,"urbanservicearea", "usa", 1, "Y");

@@ -35,68 +35,68 @@
 
 		<script type="text/javascript" src="../heron/script/Heron.js"></script>
 
-		<script type="text/javascript" src="./OptionsWorld.js"></script>
-		<script type="text/javascript" src="./Config.js"></script>
-		<script type="text/javascript" src="./DefaultConfig.js"></script>	
+		<script type="text/javascript" src="./Options.js"></script>
+		<script type="text/javascript" src="./Layers.js"></script>		
+		<script type="text/javascript" src="./Config.js"></script>	
 		<script type="text/javascript" src="./printThis.js"></script>			
 		<script type="text/javascript">
-		function setFixes()
-		{
-		
-		try
+			//Function to disable Google 45-degree tilt
+			function setFixes()
 			{
-			gHyb.mapObject.setTilt(0);
-			}
-		catch(err)
-			{
-			//This is because IE fires the onLoad event too early
-			setTimeout(function(){setFixes()}, 1000);
-			}
-
-		};
-
-		function makeWindow()
-		{
-			OpenLayers.IMAGE_RELOAD_ATTEMPTS = 3;
-			//Heron.App.map.zoomToMaxExtent();
-			win = new Ext.Window({
-				applyTo:'welcome_instr',
-				layout:'fit',
-				width:600,
-				height:365,
-				closeAction:'hide',
-				plain: true,
-
-				items: new Ext.TabPanel({
-					applyTo: 'welcome_instr_tabs',
-					autoTabs:true,
-					activeTab:0,
-					deferredRender:false,
-					border:false,
-					defaults:{ autoScroll:true }
-				})
-			});
 			
-			reportWin = new Ext.Window({
-				applyTo:'report_win',
-				layout:'fit',
-				width:600,
-				height:400,
-				closeAction:'hide',
-				plain: true,
+			try
+				{
+				gHyb.mapObject.setTilt(0);
+				}
+			catch(err)
+				{
+				//This is because IE fires the onLoad event too early
+				setTimeout(function(){setFixes()}, 1000);
+				}
+
+			};
+			
+			//Function to create Ext windows for instructions and report
+			function makeWindow()
+			{
+				OpenLayers.IMAGE_RELOAD_ATTEMPTS = 3;
+				//Heron.App.map.zoomToMaxExtent();
+				win = new Ext.Window({
+					applyTo:'welcome_instr',
+					layout:'fit',
+					width:600,
+					height:365,
+					closeAction:'hide',
+					plain: true,
+
+					items: new Ext.TabPanel({
+						applyTo: 'welcome_instr_tabs',
+						autoTabs:true,
+						activeTab:0,
+						deferredRender:false,
+						border:false,
+						defaults:{ autoScroll:true }
+					})
+				});
 				
-				items: new Ext.TabPanel({
-					applyTo: 'report_win_tabs',
-					autoTabs:true,
-					activeTab:0,
-					deferredRender:false,
-					border:false,
-					defaults:{ autoScroll:true }
-				})				
-			});
+				reportWin = new Ext.Window({
+					applyTo:'report_win',
+					layout:'fit',
+					width:600,
+					height:400,
+					closeAction:'hide',
+					plain: true,
 					
-			
-		}
+					items: new Ext.TabPanel({
+						applyTo: 'report_win_tabs',
+						autoTabs:true,
+						activeTab:0,
+						deferredRender:false,
+						border:false,
+						defaults:{ autoScroll:true }
+					})				
+				});
+			}
 		</script> 
 	</head>
 <body onload="setFixes(); makeWindow(); //win.show(this);">
@@ -159,82 +159,73 @@
 <div id="report_win" class="x-hidden">
     <div class="x-window-header">Property Report</div>
 	    <div id="report_win_tabs">
-
         <!-- Auto create tab  -->
         <div class="x-tab" title="Analysis Results" style="margin: 10px;" id="report">
-
 		<div id="printit" style="width: 100px; margin: 0 auto; color:#00AA00;"><h1 align="center" style="background-color:#EEEEEE; padding: 5px;">Print Report</h1></div>
 		<div id="report-content">
 		</div>
 		</div>
-		</div>
-	
+		</div>	
 </div>
-		<script type="text/javascript">
-			$("#printit").click(function() {
-				$("#report-content").printThis();
-				});
-			$("#printit").hover(function() {
-				$(this).css('cursor', 'pointer');
-				});
+<script type="text/javascript">
+	// jQuery: tie print function to "print" div on report
+	$("#printit").click(function() {
+		$("#report-content").printThis();
+		});
+	$("#printit").hover(function() {
+		$(this).css('cursor', 'pointer');
+		});
+		
+	var reportmap;
+	
+	//Initialize map on report
+	function reportMapInit() {
+		var options = {
+			projection: "EPSG:900913",
+			units: "m",
+			resolutions: [156543.03390625, 78271.516953125, 39135.7584765625, 19567.87923828125, 
+			9783.939619140625, 4891.9698095703125, 2445.9849047851562, 1222.9924523925781, 611.4962261962891, 
+			305.74811309814453, 152.87405654907226, 76.43702827453613, 38.218514137268066, 19.109257068634033, 
+			9.554628534317017, 4.777314267158508, 2.388657133579254, 1.194328566789627, 0.5971642833948135, 
+			0.29858214169740677, 0.14929107084870338, 0.07464553542435169, 0.037322767712175846, 0.018661383856087923, 
+			0.009330691928043961, 0.004665345964021981, 0.0023326729820109904, 0.0011663364910054952, 5.831682455027476E-4, 
+			2.915841227513738E-4, 1.457920613756869E-4],	
+			maxExtent: new OpenLayers.Bounds(-20037508.34,-20037508.34,20037508.34,20037508.34),
+			restrictedExtent: new OpenLayers.Bounds(-13670713, 4393119, -13438956, 4539114),
+			center: '-13553000, 4465500',
+			//maxExtent: 'auto',
+			//maxResolution: 'auto',
+			//xy_precision: 1,
+			zoom: 9,
+			theme: null,
+			numZoomLevels: 21,
+			controls: []
+		};				
 				
-			var reportmap;
+	
+		reportmap = new OpenLayers.Map('report-map', options);
+		var naip = new OpenLayers.Layer.WMS(
+			"naip",
+			'http://www.hcpmaps.com/geoserver/HCP/wms?',
+			{layers: "HCP:NAIP2012", tiled: true},
+			{singleTile: false, isBaseLayer: true, visibility: true, noLegend: false, numZoomLevels: 21}
+		);
 
-			function reportMapInit() {
-				var options = {
-					projection: "EPSG:900913",
-					units: "m",
-					resolutions: [156543.03390625, 78271.516953125, 39135.7584765625, 19567.87923828125, 
-					9783.939619140625, 4891.9698095703125, 2445.9849047851562, 1222.9924523925781, 611.4962261962891, 
-					305.74811309814453, 152.87405654907226, 76.43702827453613, 38.218514137268066, 19.109257068634033, 
-					9.554628534317017, 4.777314267158508, 2.388657133579254, 1.194328566789627, 0.5971642833948135, 
-					0.29858214169740677, 0.14929107084870338, 0.07464553542435169, 0.037322767712175846, 0.018661383856087923, 
-					0.009330691928043961, 0.004665345964021981, 0.0023326729820109904, 0.0011663364910054952, 5.831682455027476E-4, 
-					2.915841227513738E-4, 1.457920613756869E-4],	
-					maxExtent: new OpenLayers.Bounds(-20037508.34,-20037508.34,20037508.34,20037508.34),
-					restrictedExtent: new OpenLayers.Bounds(-13670713, 4393119, -13438956, 4539114),
-					center: '-13553000, 4465500',
-					//maxExtent: 'auto',
-					//maxResolution: 'auto',
-					//xy_precision: 1,
-					zoom: 9,
-					theme: null,
-					numZoomLevels: 21,
-					controls: []
-				};				
-						
-			
-				reportmap = new OpenLayers.Map('report-map', options);
-				var naip = new OpenLayers.Layer.WMS(
-					"naip",
-					'http://www.hcpmaps.com/geoserver/HCP/wms?',
-					{layers: "HCP:NAIP2012", tiled: true},
-					{singleTile: false, isBaseLayer: true, visibility: true, noLegend: false, numZoomLevels: 21}
-				);
+		var parcels = new OpenLayers.Layer.WMS(
+			"Parcels",
+			'http://www.hcpmaps.com/geoserver/HCP/wms?',
+			{layers: "HCP:parcels_proj", transparent: true, format: 'image/png', tiled: true},
+			{singleTile: false, opacity: 1.0, isBaseLayer: false, visibility: true, noLegend: false, featureInfoFormat:
+				'application/vnd.ogc.gml', maxResolution: 19.109257068634033}
+		);
+		
+		reportmap.addLayers([parcels, naip]);
+		theExtent = Heron.App.map.getExtent();
+		reportmap.zoomToExtent(theExtent);
+		reportmap.zoomIn();
 
-				var parcels = new OpenLayers.Layer.WMS(
-					"Parcels",
-					'http://www.hcpmaps.com/geoserver/HCP/wms?',
-					{layers: "HCP:parcels_proj", transparent: true, format: 'image/png', tiled: true},
-					{singleTile: false, opacity: 1.0, isBaseLayer: false, visibility: true, noLegend: false, featureInfoFormat:
-						'application/vnd.ogc.gml', maxResolution: 19.109257068634033}
-				);
-				
-
-				reportmap.addLayers([parcels, naip]);
-
-				// Google.v3 uses EPSG:900913 as projection, so we have to
-				// transform our coordinates
-				
-				//reportmap.zoomToMaxExtent();
-				theExtent = Heron.App.map.getExtent();
-				reportmap.zoomToExtent(theExtent);
-				reportmap.zoomIn();
-
-			}				
-				
-				
-		</script>
+	}					
+</script>
 
 </body> 
 </html>
