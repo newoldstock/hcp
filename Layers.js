@@ -126,12 +126,6 @@ Heron.options.map.layers = [
 		{layers: "HCP:land_cover_fee_zones", transparent: true, format: 'image/png', tiled: true},
 		{singleTile: false, opacity: 0.7, isBaseLayer: false, visibility: false, noLegend: false, featureInfoFormat: 'application/vnd.ogc.gml' }
 	),	
-	// new OpenLayers.Layer.WMS(
-		// "FEE ZONES",
-		// 'http://www.hcpmaps.com/geoserver/HCP/wms?',
-		// {layers: "HCP:grp_fee_zones", transparent: true, format: 'image/png', tiled: true},
-		// {singleTile: false, opacity: 0.7, isBaseLayer: false, visibility: false, noLegend: false, featureInfoFormat: 'application/vnd.ogc.gml' }
-	// ),		
 	new OpenLayers.Layer.WMS(
 		"Land Cover",
 		'http://www.hcpmaps.com/geoserver/HCP/wms?',
@@ -158,27 +152,7 @@ Heron.options.map.layers = [
 		{singleTile: false, opacity: 0.70, isBaseLayer: false, visibility: false, noLegend: false,  featureInfoFormat: 'application/vnd.ogc.gml'}
 		),	
 
-/* 	new OpenLayers.Layer.WMS(
-		"Footprints",
-		'http://www.hcpmaps.com/geoserver/HCP/wms?',
-		{layers: "HCP:hcp_report_footprints", transparent: true, format: 'image/png', tiled: true},
-		{singleTile: false, opacity: 0.70, isBaseLayer: false, visibility: false, noLegend: false,  featureInfoFormat: 'application/vnd.ogc.gml'}
-		),	 */
-		
-	// new OpenLayers.Layer.WMS(
-		// "Habitat Plan Permit Area:Dots",
-		// 'http://www.hcpmaps.com/geoserver/HCP/wms?',
-		// {layers: "HCP:hcp_boundary", transparent: true, format: 'image/png', tiled: false, styles: "dots"},
-		// {singleTile: false, opacity: 0.80, isBaseLayer: false, visibility: true, noLegend: false,  featureInfoFormat: 'application/vnd.ogc.gml'}
-		// ),	
-		
-	// new OpenLayers.Layer.WMS(
-		// "Habitat Plan Permit Area",
-		// 'http://www.hcpmaps.com/geoserver/HCP/wms?',
-		// {layers: "HCP:hcp_boundary", transparent: true, format: 'image/png', tiled: true},
-		// {singleTile: false, opacity: 0.50, isBaseLayer: false, visibility: false, noLegend: false,  featureInfoFormat: 'application/vnd.ogc.gml'}
-		// ),	
-	new OpenLayers.Layer.WMS(
+	theCount = new OpenLayers.Layer.WMS(
 		"Santa Clara County Boundary",
 		'http://www.hcpmaps.com/geoserver/HCP/wms?',
 		{layers: "HCP:county_boundary_area", transparent: true, format: 'image/png', tiled: true},
@@ -191,9 +165,7 @@ var newLayertree = [
 	{
 		text:'HCP Data', expanded: true, children:
 			[
-				{nodeType: 'gx_layer', layer: 'Habitat Plan Permit Area'},
-				// {nodeType: 'gx_layer', layer: 'Habitat Plan Permit Area:Dots'},
-				// {nodeType: 'gx_layer', layer: 'Habitat Plan Permit Area:Slash'},				
+				{nodeType: 'gx_layer', layer: 'Habitat Plan Permit Area'},			
 				{nodeType: 'gx_layer', layer: 'Private Development Areas'},		
 				{nodeType: 'gx_layer', layer: 'Land Cover'},
 				
@@ -219,8 +191,7 @@ var newLayertree = [
 					[
 						{nodeType: 'gx_layer', layer: 'Category 1 Stream Buffers and Setbacks'},
 						{nodeType: 'gx_layer', layer: 'Valley Oak and Blue Oak Woodlands'},
-						{nodeType: 'gx_layer', layer: 'Urban Reserve System Interface Zones'},
-/* 						{nodeType: 'gx_layer', layer: 'Footprints'}	 */						
+						{nodeType: 'gx_layer', layer: 'Urban Reserve System Interface Zones'},					
 					]
 				},
 				

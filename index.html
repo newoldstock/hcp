@@ -1,13 +1,21 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
 		"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
+<!-------------------------------------------------------------------------------------
+This program was developed using the following open source software: OpenLayers, Heron, 
+GeoExt, and jQuery, and is subject to the terms and conditions of the open source software
+license agreements.  The open source software is shared without any warranty; without even
+the implied warranty of merchantability or fitness for a particular purpose.  
+See the individual license agreements for additional information.
+-------------------------------------------------------------------------------------->
+
 <html>
 	<head>
 		<meta charset='utf-8'/>
 		<META HTTP-EQUIV="Pragma" CONTENT="no-cache">
 		<META HTTP-EQUIV="Expires" CONTENT="-1">		
 		<title>Habitat Agency Geobrowser</title>
-		<link rel="stylesheet" type="text/css" href="./mycss.css"/>		
+		<link rel="stylesheet" type="text/css" href="./appcss.css"/>		
 		<link rel="stylesheet" type="text/css" href="./splash.css"/>
 		<script>
 		  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
@@ -19,7 +27,7 @@
 		</script>
 		<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
 		<script type="text/javascript" src="./jquery.blockUI.js"></script>
-		<script type="text/javascript" src="./splash.js"></script>
+
 		<link rel="stylesheet" type="text/css" href="http://extjs.cachefly.net/ext-3.4.0/resources/css/ext-all.css"/>
 		<script type="text/javascript" src="http://extjs.cachefly.net/ext-3.4.0/adapter/ext/ext-base.js"></script>
 		<script type="text/javascript" src="http://extjs.cachefly.net/ext-3.4.0/ext-all.js"></script>
@@ -38,14 +46,16 @@
 		<script type="text/javascript" src="./Options.js"></script>
 		<script type="text/javascript" src="./Layers.js"></script>		
 		<script type="text/javascript" src="./Config.js"></script>	
-		<script type="text/javascript" src="./printThis.js"></script>			
+		<script type="text/javascript" src="./printThis.js"></script>	
+		<script type="text/javascript" src="./splash.js"></script>		
 		<script type="text/javascript">
+			var startBounds = new OpenLayers.Bounds(-13608798.972234, 4423388.4771902, -13490321.578408, 4509609.4450838);
 			//Function to disable Google 45-degree tilt
 			function setFixes()
 			{
-			
 			try
 				{
+				Heron.App.map.zoomToExtent(startBounds); //unrelated opportunity to zoom to extent of County
 				gHyb.mapObject.setTilt(0);
 				}
 			catch(err)
@@ -96,10 +106,11 @@
 						defaults:{ autoScroll:true }
 					})				
 				});
-			}
+			};
+					
 		</script> 
 	</head>
-<body onload="setFixes(); makeWindow(); //win.show(this);">
+<body onload="setFixes(); makeWindow(); ">
 <div id="welcome_instr" class="x-hidden">
     <div class="x-window-header">Habitat Agency Geobrowser</div>
     <div id="welcome_instr_tabs">
@@ -177,7 +188,7 @@
 		});
 		
 	var reportmap;
-	
+
 	//Initialize map on report
 	function reportMapInit() {
 		var options = {
@@ -193,9 +204,6 @@
 			maxExtent: new OpenLayers.Bounds(-20037508.34,-20037508.34,20037508.34,20037508.34),
 			restrictedExtent: new OpenLayers.Bounds(-13670713, 4393119, -13438956, 4539114),
 			center: '-13553000, 4465500',
-			//maxExtent: 'auto',
-			//maxResolution: 'auto',
-			//xy_precision: 1,
 			zoom: 9,
 			theme: null,
 			numZoomLevels: 21,
@@ -224,7 +232,8 @@
 		reportmap.zoomToExtent(theExtent);
 		reportmap.zoomIn();
 
-	}					
+	}	
+
 </script>
 
 </body> 

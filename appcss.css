@@ -1,0 +1,110 @@
+#banner_container {
+	vertical-align: middle;
+	position: relative;
+	height: 80px;
+	font-family: Arial, Helvetica, sans-serif;
+    font-size: 24px;	
+	color: #EEEEEF;
+	background-color: #225180;
+	background-image: url('banner_logo.jpg');
+	background-repeat: no-repeat;
+	background-position: 5px;
+}
+	
+#banner_main {
+	line-height: 80px;
+	padding-left: 75px;
+	}
+
+#body {
+	    font-family: Arial, Helvetica, sans-serif;	
+	    font-size: 14px;
+	}
+
+#disclaimer{
+	    font-family: Arial, Helvetica, sans-serif;	
+	    font-size: 9px;
+		color: #AAAAAA;
+}
+
+#report-content {
+	padding: 10px;
+}
+
+#report-map{
+	width: 300px;
+	height: 200px;
+	background-color: #AAFFAA;
+}
+	
+.x-btn .icon-instructions {
+    background-image: url(./resources/help.png);
+}
+
+.x-btn .icon-report-parcel {
+    background-image: url(./resources/report_parcel.png);
+}
+
+.x-btn .icon-report-polygon {
+    background-image: url(./resources/report_polygon.png);
+}
+
+.bmenu {
+    background-image: url(menu-show.gif) !important;
+}
+
+.db-table {
+	margin-top: 5px;
+	width:100%;
+	border:1px solid #000000;
+	border-collapse: collapse;
+	
+	-moz-border-radius-bottomleft:0px;
+	-webkit-border-bottom-left-radius:0px;
+	border-bottom-left-radius:0px;
+	
+	-moz-border-radius-bottomright:0px;
+	-webkit-border-bottom-right-radius:0px;
+	border-bottom-right-radius:0px;
+	
+	-moz-border-radius-topright:0px;
+	-webkit-border-top-right-radius:0px;
+	border-top-right-radius:0px;
+	
+	-moz-border-radius-topleft:0px;
+	-webkit-border-top-left-radius:0px;
+	border-top-left-radius:0px;
+}
+.db-table table{
+	width:100%;
+	height:100%;
+	margin:0px;padding:0px;
+}
+.db-table tr:nth-child(odd){ background-color:#EEEEEE; }
+.db-table tr:nth-child(even)    { background-color:#ffffff; }
+.db-table td{
+	vertical-align:middle;
+	border:1px solid #000000;
+	border-width:0px 1px 1px 0px;
+	text-align:left;
+	padding:4px;
+	font-size:10px;
+	font-family:Arial;
+	font-weight:normal;
+	color:#000000;
+}.db-table tr:last-child td{
+	border-width:0px 1px 0px 0px;
+}.db-table tr td:last-child{
+	border-width:0px 0px 1px 0px;
+}.db-table tr:last-child td:last-child{
+	border-width:0px 0px 0px 0px;
+}
+
+.db-table th{
+	border: 0px;
+	}
+
+.db-table li {
+	list-style-type: square;
+	margin-left: 15px;
+}
