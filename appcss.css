@@ -79,6 +79,7 @@
 	width:100%;
 	height:100%;
 	margin:0px;padding:0px;
+
 }
 .db-table tr:nth-child(odd){ background-color:#EEEEEE; }
 .db-table tr:nth-child(even)    { background-color:#ffffff; }
@@ -107,4 +108,17 @@
 .db-table li {
 	list-style-type: square;
 	margin-left: 15px;
+}
+
+@media print
+{    
+    .no-print, .no-print *
+    {
+        display: none !important;
+    }
+	
+	h1
+	{
+		font-family: Arial;
+	}
 }

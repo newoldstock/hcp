@@ -2,8 +2,9 @@
 	error_reporting(E_ALL);
 	ini_set('display_errors', '1');
 	
+	// Main analysis function
 	function run_query ($connection, $poly, $layer_name, $attribute, $threshold, $pctYN) {
-			 $resultsArray=array(); //establish array to hold result
+			 $resultsArray = array(); //establish array to hold result
 			 //[0]: attribute column from analysis layer
 			 //[1]: area of the intersect between parcel poly and layer poly
 			 //[2]: area of parcel
@@ -49,6 +50,7 @@
 
 	}	
 	
+	//Function to format and spit out results into a table
 	function formatResults ($rowName, $results) {
 		echo '<tr><td>'.$rowName.'</td><td>';
 
@@ -62,7 +64,7 @@
 		}	
 	}
 ?>
-<link rel="stylesheet" type="text/css" href="mycss.css"/>
+<link rel="stylesheet" type="text/css" href="appcss.css"/>
 	
 <?php	
 	// Grab passed polygon
@@ -70,12 +72,16 @@
 	$uniqueID = $_GET['guid'];
 	$vertcount = $_GET['vertcount'];
 	
-	// Halt the process if vertex count > 250
+	// Halt the process if vertex count > 250 or < 3
 	if ($vertcount > 250) {
 		echo '<tr><td><h1><span style="color:red"><p>There are too many vertices in your polygon for the analysis to progress.  Please reduce the complexity of the analysis footprint.</span></h1></td></tr>';
 		exit;
 	}
-	
+
+	if ($vertcount < 3) {
+		echo '<tr><td><h1><span style="color:red"><p>There were not enough points to form a polygon.  Please try the analysis again.</span></h1></td></tr>';
+		exit;
+	}	
 	//Convert polygon from EPSG:900913 to EPSG:2227
 	$polyString = "ST_Transform(ST_GeomFromText('".$rawpoly."', 900913), 2227)";
 	
@@ -96,7 +102,7 @@
 	$insertQuery = "INSERT INTO hcp_report_footprints (the_geom, uniqueid) values (ST_GeomFromText('$rawpoly', 900913), '$uniqueID')";
 	$result = pg_query($insertQuery) or die('Query failed: ' . pg_last_error());	
 	
-	//Grab GID for 
+	//Grab GID from database using passed UID
 	$gidQuery = "SELECT gid from hcp_report_footprints WHERE uniqueid = '$uniqueID'";
 	$result = pg_query($gidQuery) or die('Query failed: ' . pg_last_error());	
 	$row = pg_fetch_row($result);
@@ -108,10 +114,10 @@
 	$result = pg_query($query) or die('Query failed: ' . pg_last_error());
 	
 	while ($row = pg_fetch_row($result)) {
-		$theArea = round($row[0]/43560, 2);
+		$theArea = round($row[0]/43560, 2); //convert to acres
 	}
 	$shpLink = "http://www.hcpmaps.com/geoserver/HCP/wfs?service=wfs&version=2.0.0&request=GetFeature&typeName=hcp_report_footprints&featureID=hcp_report_footprints.".$gid."&srsName=EPSG:2227&outputFormat=shape-zip";
-	echo '<a href="'.$shpLink.'" style="text-decoration: none" title="Click to download analysis polygon as ESRI Shapefile"><div id="download" style="width: 100px; margin: 0 auto; color:#0000AA;"><h1 align="center" style="background-color:#EEEEEE; padding: 5px;">Download Data</h1></div></a>';
+	echo '<a href="'.$shpLink.'" style="text-decoration: none" title="Click to download analysis polygon as ESRI Shapefile"><div id="download" style="width: 100px; margin: 0 auto; color:#0000AA;" class="no-print"><h1 align="center" style="background-color:#EEEEEE; padding: 5px;">Download Data</h1></div></a>';
 	echo '<body>';
 	//echo '<a href="'.$shpLink.'" target="_blank">Download Footprint as ESRI Shapefile</a>';
 	echo '<h1>General Information</h1>';
