@@ -117,7 +117,7 @@
 		$theArea = round($row[0]/43560, 2); //convert to acres
 	}
 	$shpLink = "http://www.hcpmaps.com/geoserver/HCP/wfs?service=wfs&version=2.0.0&request=GetFeature&typeName=hcp_report_footprints&featureID=hcp_report_footprints.".$gid."&srsName=EPSG:2227&outputFormat=shape-zip";
-	echo '<a href="'.$shpLink.'" style="text-decoration: none" title="Click to download analysis polygon as ESRI Shapefile"><div id="download" style="width: 100px; margin: 0 auto; color:#0000AA;" class="no-print"><h1 align="center" style="background-color:#EEEEEE; padding: 5px;">Download Data</h1></div></a>';
+	echo '<a href="'.$shpLink.'" style="text-decoration: none" title="Click to download analysis polygon as ESRI Shapefile"><div id="download" style="width: 120px; margin: 0 auto; color:#0000AA;" class="no-print"><h1 align="center" style="background-color:#EEEEEE; padding: 5px;">Download Analysis Polygon</h1></div></a>';
 	echo '<body>';
 	//echo '<a href="'.$shpLink.'" target="_blank">Download Footprint as ESRI Shapefile</a>';
 	echo '<h1>General Information</h1>';
