@@ -134,55 +134,55 @@
 	}
 
 //Private Development Areas---------------------------------------------------------------------
-	$queryLayer = run_query($dbconn, $apn,"private_development_coverage_areas_2", "zone", 1, "Y");
+	$queryLayer = run_query($dbconn, $apn,"private_development_coverage_areas_2", "zone", 0, "Y");
 	formatResults ("Private Development Areas", $queryLayer);
 	
 //Land Cover----------------------------------------------------------------------------
-	$queryLayer = run_query($dbconn, $apn,"land_cover", "land_cover", 0.5, "Y");
+	$queryLayer = run_query($dbconn, $apn,"land_cover", "land_cover", 0, "Y");
 	formatResults ("Land Cover", $queryLayer);
 	
 //Land Cover Fee Zones---------------------------------------------------------------------------
-	$queryLayer = run_query($dbconn, $apn,"land_cover_fee_zones", "fee_zone", 1, "Y");
+	$queryLayer = run_query($dbconn, $apn,"land_cover_fee_zones", "fee_zone", 0, "Y");
 	formatResults ("Land Cover Fee Zones", $queryLayer);
 
 //Wetland Fee Zones---------------------------------------------------------------------------
-	$queryLayer = run_query($dbconn, $apn,"wetland_fee_zones", "land_cover", 1, "Y");
+	$queryLayer = run_query($dbconn, $apn,"wetland_fee_zones", "land_cover", 0, "Y");
 	formatResults ("Wetland Fee Zones", $queryLayer);
 
 //Serpentine Fee Zones---------------------------------------------------------------------------
-	$queryLayer = run_query($dbconn, $apn,"serpentine_fee_zones", "land_cover", 1, "Y");
+	$queryLayer = run_query($dbconn, $apn,"serpentine_fee_zones", "land_cover", 0, "Y");
 	formatResults ("Serpentine Fee Zones", $queryLayer);
 		
 //Burrowing Owl Survey and Fee Zones---------------------------------------------------------------------------
-	$queryLayer = run_query($dbconn, $apn,"occupiednestingburrowingowlhabitat", "name", 1, "Y");
+	$queryLayer = run_query($dbconn, $apn,"occupiednestingburrowingowlhabitat", "name", 0, "Y");
 	formatResults ("Burrowing Owl Survey and Fee Zone", $queryLayer);
 				
 //Wildlife Survey Areas-------------------------------------------------------------------------
-	$queryLayer = run_query($dbconn, $apn,"wildlife_survey_areas", "species", 1, "Y");
+	$queryLayer = run_query($dbconn, $apn,"wildlife_survey_areas", "species", 0, "Y");
 	formatResults ("Wildlife Survey Areas", $queryLayer);
 
 //Plant Survey Areas-------------------------------------------------------------------------
-	$queryLayer = run_query($dbconn, $apn,"plant_survey_areas", "land_cover", 1, "Y");
+	$queryLayer = run_query($dbconn, $apn,"plant_survey_areas", "land_cover", 0, "Y");
 	formatResults ("Plant Survey Areas", $queryLayer);
 
 //Known Occurrences of Covered Plants----------------------------------------------------------------
-	$queryLayer = run_query($dbconn, $apn,"known_occurrences_covered_plants", "commonname", 1, "Y");
+	$queryLayer = run_query($dbconn, $apn,"known_occurrences_covered_plants", "commonname", 0, "Y");
 	formatResults ("Known Occurrences of Covered Plants (1/4 mile radius)", $queryLayer);
 
 //Category 1 Stream Buffers and Setbacks--------------------------------------------------------------
-	$queryLayer = run_query($dbconn, $apn,"category_1_stream_buffers", "geobrowser_note", 1, "Y");
+	$queryLayer = run_query($dbconn, $apn,"category_1_stream_buffers", "geobrowser_note", 0, "Y");
 	formatResults ("Category 1 Streams and Setbacks", $queryLayer);
 
 //Valley Oak and Blue Oak Woodlands-----------------------------------------------------------
-	$queryLayer = run_query($dbconn, $apn,"valley_and_blue_oak_woodlands", "land_cover", 1, "Y");
+	$queryLayer = run_query($dbconn, $apn,"valley_and_blue_oak_woodlands", "land_cover", 0, "Y");
 	formatResults ("Valley Oak and Blue Oak Woodland", $queryLayer);
 
 //Urban Reserve System Interface Zones----------------------------------------------------------
-	$queryLayer = run_query($dbconn, $apn,"urbanreservesysteminterfacezones", "note", 1, "Y");
+	$queryLayer = run_query($dbconn, $apn,"urbanreservesysteminterfacezones", "note", 0, "Y");
 	formatResults ("Urban Reserve System Interface Zones", $queryLayer);
 	
 //Priority Reserve Areas--------------------------------------------------------------------
-	$queryLayer = run_query($dbconn, $apn,"conservationanalysiszones_high_mod", "priority", 1, "Y");
+	$queryLayer = run_query($dbconn, $apn,"conservationanalysiszones_high_mod", "priority", 0, "Y");
 	formatResults ("Priority Reserve Areas", $queryLayer);	
 	
 

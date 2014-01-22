@@ -103,9 +103,9 @@ Heron.options.map.layers = [
 		{singleTile: false, opacity: 0.7, isBaseLayer: false, visibility: false, noLegend: false, featureInfoFormat: 'application/vnd.ogc.gml' }
 	),	
 	new OpenLayers.Layer.WMS(
-		"Burrowing Owl Survey and Fee Zones",
+		"Burrowing Owl Fee Zones",
 		'http://www.hcpmaps.com/geoserver/HCP/wms?',
-		{layers: "HCP:burrowing_owl_survey", transparent: true, format: 'image/png', tiled: true},
+		{layers: "HCP:burrowingowlfeezones", transparent: true, format: 'image/png', tiled: true},
 		{singleTile: false, opacity: 0.8, isBaseLayer: false, visibility: false, noLegend: false, featureInfoFormat: 'application/vnd.ogc.gml' }
 	),	
 	new OpenLayers.Layer.WMS(
@@ -174,7 +174,7 @@ var newLayertree = [
 						{nodeType: 'gx_layer', layer: 'Land Cover Fee Zones'},
 						{nodeType: 'gx_layer', layer: 'Wetland Fee Zones'},
 						{nodeType: 'gx_layer', layer: 'Serpentine Fee Zones'},
-						{nodeType: 'gx_layer', layer: 'Burrowing Owl Survey and Fee Zones'}						
+						{nodeType: 'gx_layer', layer: 'Burrowing Owl Fee Zones'}						
 					]
 				},
 				
