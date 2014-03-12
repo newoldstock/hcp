@@ -97,6 +97,8 @@
 	// 	$apn = $row[0];
 	// }
 	echo '<body>';
+	echo '<img src="./resources/scv_header.jpg" height="135" width="700" style="display: block; margin: auto;">';
+	echo '<br><hr><br>';
 	echo '<h1>General Information</h1>';
 	echo '<table cellpadding="0" cellspacing="0" class="db-table">';		
 	echo '<tr><td>APN</td><td>'.$apn.'</td><th rowspan="6" width="300"><div id="report-map"></div></th></tr>';
@@ -193,7 +195,9 @@ pg_close($dbconn);
 
 ?>
 </table>
-
+<br>
+<div style="margin: auto;"><p style="text-align: center; font-size:7px; color:#555555;">All information provided in official Santa Clara Valley Habitat Agency (SCVHA) websites is provided for informational purposes only and does not constitute a legal contract between the SCVHA and any person or entity. Information on the websites is subject to change without prior notice. Although every reasonable effort is made to present current and accurate information, the SCVHA makes no guarantees of any kind.<br>
+The SCVHA, its employees, officers, content providers, affiliates or other representatives are not liable for damages of any kind (including, without limitation, lost profits, direct, indirect, compensatory, consequential, exemplary, special, incidental, or punitive damages) arising out of your use of, your inability to use, or the performance of this website or the content whether or not we have been advised of the possibility of such damages.</p></div>
 </body>
 
 </html>

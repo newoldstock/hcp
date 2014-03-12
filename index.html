@@ -12,8 +12,9 @@ See the individual license agreements for additional information.
 <html>
 	<head>
 		<meta charset='utf-8'/>
+		<META HTTP-EQUIV="Cache-Control" CONTENT="no-cache, no-store, must-revalidate">
 		<META HTTP-EQUIV="Pragma" CONTENT="no-cache">
-		<META HTTP-EQUIV="Expires" CONTENT="-1">		
+		<META HTTP-EQUIV="Expires" CONTENT="0">		
 		<title>Habitat Agency Geobrowser</title>
 		<link rel="stylesheet" type="text/css" href="./appcss.css"/>		
 		<link rel="stylesheet" type="text/css" href="./splash.css"/>
@@ -39,9 +40,9 @@ See the individual license agreements for additional information.
 		<script type="text/javascript" src="http://lib.heron-mc.org/geoext/1.1/script/GeoExt.js"></script>
 		<script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?sensor=false"></script>
 
-		<link rel="stylesheet" type="text/css" href="../heron-1.0.0/resources/css/default.css"/>
+		<link rel="stylesheet" type="text/css" href="../heron/resources/css/default.css"/>
 
-		<script type="text/javascript" src="../heron-1.0.0/script/Heron.js"></script>
+		<script type="text/javascript" src="../heron/script/Heron.js"></script>
 
 		<script type="text/javascript" src="./Options.js"></script>
 		<script type="text/javascript" src="./Layers.js"></script>		
@@ -92,8 +93,8 @@ See the individual license agreements for additional information.
 				reportWin = new Ext.Window({
 					applyTo:'report_win',
 					layout:'fit',
-					width:600,
-					height:400,
+					width:800,
+					height:600,
 					closeAction:'hide',
 					plain: true,
 					
