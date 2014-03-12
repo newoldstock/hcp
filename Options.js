@@ -204,8 +204,18 @@ Heron.options.map.toolbar = [
 										Ext.fly("report-content").update(content);
 										reportWin.show(this);
 										reportMapInit();
+										//Grab passed parcel extent from hidden div and zoom to it.  There is probably a more elegant way of doing this.
+										split = $("#extent").text().split(",");
+										var bounds = new OpenLayers.Bounds();
+										bounds.extend(new OpenLayers.LonLat(split[0], split[1]));
+										bounds.extend(new OpenLayers.LonLat(split[2], split[3]));
+										reportmap.zoomToExtent(bounds);
+
 						            }
-						});						
+						});
+						//theExtent = Heron.App.map.getExtent();
+						//reportmap.zoomToExtent(theExtent);
+						//reportmap.zoomIn();
 				    }											
 				}),
 				map: mapPanel.getMap(),

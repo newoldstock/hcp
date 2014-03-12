@@ -60,7 +60,7 @@
 		}	
 	}
 ?>
-<link rel="stylesheet" type="text/css" href="mycss.css"/>
+<link rel="stylesheet" type="text/css" href="appcss.css"/>
 	
 <?php	
 	$x = $_GET['x'];
@@ -85,6 +85,15 @@
 		echo '<p>No APN located';
 		exit;
 		}
+	//Set up query for parcel extent to pass to report window.  Hide this value in "extent" div to pass to main application. Surely there's a better way to do this.
+	$query = 'select st_xmin(st_extent(st_transform(the_geom, 900913))),st_ymin(st_extent(st_transform(the_geom, 900913))), st_xmax(st_extent(st_transform(the_geom, 900913))),st_ymax(st_extent(st_transform(the_geom, 900913))) from parcels where apn = \''.$apn.'\'';
+	$result = pg_query($query) or die('Query failed: ' . pg_last_error());
+	$firstResult = pg_fetch_row($result);
+	$xMin = $firstResult[0];
+	$yMin = $firstResult[1];	
+	$xMax = $firstResult[2];
+	$yMax = $firstResult[3];	
+	$extentString = $xMin.','.$yMin.','.$xMax.','.$yMax;
 	
 	//Set up query for basic property information
 	$query = 'select situs_addr, acres_rec from parcels where apn = \''.$apn.'\'';
@@ -97,6 +106,7 @@
 	// 	$apn = $row[0];
 	// }
 	echo '<body>';
+	echo '<div id="extent" style="visibility: hidden;">'.$extentString.'</div>';
 	echo '<img src="./resources/scv_header.jpg" height="135" width="700" style="display: block; margin: auto;">';
 	echo '<br><hr><br>';
 	echo '<h1>General Information</h1>';
