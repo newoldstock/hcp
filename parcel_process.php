@@ -46,7 +46,34 @@
 			 return $unique_results; //return results
 
 	}	
+	function run_query_LINE ($connection, $apn, $layer_name, $attribute, $threshold, $pctYN) {
+			 $resultsArray=array(); //establish array to hold result
+			 //[0]: attribute column from analysis layer
+			 //[1]: area of the intersect between parcel poly and layer poly
+			 //[2]: area of parcel
+			 //
+			 //Select based on intersect between parcel layer and analysis layer where apn=passed apn
+
+			 $qryString = "SELECT $attribute, sum(st_length(st_intersection($layer_name.the_geom, parcels.the_geom ))) from parcels, $layer_name where parcels.the_geom && $layer_name.the_geom and st_intersects($layer_name.the_geom, parcels.the_geom) and parcels.apn='$apn' group by $attribute";   
+			 $qry_results = pg_query($connection, $qryString);
+			 $the_count = pg_num_rows($qry_results);
+			 if ($the_count == 0) { //no results were returned
+			   //do nothing -- return no results;
+			 }
+			 else { //there is at least one record
+			   while ($row = pg_fetch_row($qry_results)) { //while there are rows left in the returned results...
+				 $value = round($row[1]);  //grab attribute value
+
+						$resultsArray[]=$value." linear feet";
+					  //$resultsArray[]=$value." ($row[1] sq ft)";
+					}
+					
+				 }
 	
+			 $unique_results = array_unique($resultsArray); //make results array unique
+			 return $unique_results; //return results
+
+	}	
 	function formatResults ($rowName, $results) {
 		echo '<tr><td>'.$rowName.'</td><td>';
 
@@ -184,6 +211,10 @@
 //Category 1 Stream Buffers and Setbacks--------------------------------------------------------------
 	$queryLayer = run_query($dbconn, $apn,"category_1_stream_buffers", "geobrowser_note", 0, "Y");
 	formatResults ("Category 1 Streams and Setbacks", $queryLayer);
+
+//Category 1 Streams and setbacks  REPORT LINEAR FEET OF STREAM-------------------------------------------
+	$queryLayer = run_query_LINE($dbconn, $apn,"streams_and_setbacks", "buff_dist", 0, "N");
+	formatResults ("Category 1 Streams and Setbacks (stream length)", $queryLayer);
 
 //Valley Oak and Blue Oak Woodlands-----------------------------------------------------------
 	$queryLayer = run_query($dbconn, $apn,"valley_and_blue_oak_woodlands", "land_cover", 0, "Y");
