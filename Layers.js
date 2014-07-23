@@ -26,12 +26,20 @@ Heron.options.map.layers = [
 	),
 
 
-	new OpenLayers.Layer.WMS(
+/* 	new OpenLayers.Layer.WMS(
 		"<a href='http://www.fsa.usda.gov/FSA/apfoapp?area=home&subject=prog&topic=nai' target='_blank'>NAIP Imagery, 2012</a>",
 		'http://www.hcpmaps.com/geoserver/HCP/wms?',
 		{layers: "HCP:NAIP2012", tiled: true},
 		{singleTile: false, isBaseLayer: true, visibility: false, noLegend: false, numZoomLevels: 21}
+	), */
+
+	new OpenLayers.Layer.WMS(
+		"NAIP Imagery",
+		'http://www.hcpmaps.com/geoserver/HCP/wms?',
+		{layers: "HCP:nat_raster", format: 'image/png'},
+		{singleTile: false, opacity: 1.0, isBaseLayer: true, maxResolution: 19.109257068634033, visibility: false, noLegend: false, featureInfoFormat: 'application/vnd.ogc.gml' }
 	),
+	
 	new OpenLayers.Layer("None", {isBaseLayer: true, numZoomLevels: 21}),	
 	
 	
@@ -178,11 +186,10 @@ var newLayertree = [
 					]
 				},
 				
-				{nodeType: 'gx_layer', layer: 'Wildlife Survey Areas'},	
-				
-				{text: 'Plant Survey Areas', expanded: false, children:
+				{text: 'Survey Areas', expanded: false, children:
 					[
-						{nodeType: 'gx_layer', layer: 'Plant Survey Areas'},	
+						{nodeType: 'gx_layer', layer: 'Plant Survey Areas'},
+						{nodeType: 'gx_layer', layer: 'Wildlife Survey Areas'},							
 						{nodeType: 'gx_layer', layer: 'Known Occurrences of Covered Plants: 1/4 Mi Buffer'},						
 					]
 				},

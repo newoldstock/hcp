@@ -42,14 +42,18 @@ See the individual license agreements for additional information.
 		<script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?sensor=false"></script>
 
 		<link rel="stylesheet" type="text/css" href="../heron/resources/css/default.css"/>
-
+	<!-- Script and css resources for printpreview ux -->
+		<script type="text/javascript" src="../heron/ux/printpreview/lib/GeoExt.ux/PrintPreview.js"></script>
+		<script type="text/javascript" src="../heron/ux/printpreview/lib/locale/PrintPreview-en.js"></script>
+		<link rel="stylesheet" type="text/css" href="../heron/ux/printpreview/resources/css/printpreview.css" />
+	
 		<script type="text/javascript" src="../heron/script/Heron.js"></script>
-
 		<script type="text/javascript" src="./Options.js"></script>
 		<script type="text/javascript" src="./Layers.js"></script>		
 		<script type="text/javascript" src="./Config.js"></script>	
 		<script type="text/javascript" src="./printThis.js"></script>	
 		<script type="text/javascript" src="./splash.js"></script>		
+
 		<script type="text/javascript">
 			var startBounds = new OpenLayers.Bounds(-13608798.972234, 4423388.4771902, -13490321.578408, 4509609.4450838);
 			//Function to disable Google 45-degree tilt
@@ -220,7 +224,7 @@ See the individual license agreements for additional information.
 		var naip = new OpenLayers.Layer.WMS(
 			"naip",
 			'http://www.hcpmaps.com/geoserver/HCP/wms?',
-			{layers: "HCP:NAIP2012", tiled: true},
+			{layers: "HCP:nat_raster", tiled: true},
 			{singleTile: false, isBaseLayer: true, visibility: true, noLegend: false, numZoomLevels: 21}
 		);
 

@@ -75,7 +75,7 @@ Heron.options.map.toolbar = [
     {type: "zoomin"},
     {type: "zoomout"},
     {type: "zoomvisible"},
-    {type: "coordinatesearch", options: {projEpsg: 'EPSG:4326', onSearchCompleteZoom: 5, fieldLabelX: 'lon (X)', fieldLabelY: 'lat (Y)', fieldEmptyTextX: 'Enter'}},
+    {type: "coordinatesearch", options: {projEpsg: 'EPSG:900913', onSearchCompleteZoom: 5, fieldLabelX: 'lon (X)', fieldLabelY: 'lat (Y)', fieldEmptyTextX: 'Enter'}},
     {type: "-"} ,
     {type: "zoomprevious"},
     {type: "zoomnext"},

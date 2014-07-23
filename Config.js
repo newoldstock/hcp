@@ -71,7 +71,7 @@ Heron.layout = {
 									html: 'Enter a partial or complete APN (no dashes), and then click \'Search\' to locate a property.<br><br>Visit the <a href="https://www.sccassessor.org/" target="_blank">Santa Clara County Assessor\'s website</a> to determine the APN of a property.',
 									style: {
 										fontSize: '10px',
-										color: '#AAAAAA'
+										color: '#333333'
 									}
 								}
 							],
@@ -118,11 +118,6 @@ Heron.layout = {
 									header: "Address",
 									width: 203,
 									dataIndex: "situs_addr"
-								},
-								{
-									header: "Acres",
-									width: 55,
-									dataIndex: "acres_rec"
 								}				
 							],
 							//exportFormats: ['XLS', 'CSV'],
